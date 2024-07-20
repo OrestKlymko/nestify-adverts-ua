@@ -1,0 +1,14 @@
+package org.ui.main.model.enums;
+
+public enum Advantage {
+	NEWBUILDING,
+	WITH_PETS,
+	WITH_CHILD,
+	CLOSE_SUPERMARKET,
+	CLOSE_BUS_STOP,
+	CLOSE_TRAIN_STOP,
+	GOOD_TRANSPORT_STATE,
+	CENTER,
+	OUT_OF_CITY,
+	SILENT_DISTRICT
+}
