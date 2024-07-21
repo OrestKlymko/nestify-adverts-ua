@@ -1,7 +1,7 @@
 package org.ui.main.search.dto;
 
-import org.ui.main.model.enums.Advantage;
-import org.ui.main.model.enums.ApartmentFeature;
+import org.ui.main.advert.model.enums.Advantage;
+import org.ui.main.advert.model.enums.ApartmentFeature;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,7 +17,7 @@ public record FilterSearchResponse(
 		String address,
 		List<ApartmentFeature> features,
 		String description,
-		List<Advantage> advantageList,
+		List<Advantage> advantagesList,
 		LocalDateTime published_at,
 		String district,
 		long buildIdMapTiler,

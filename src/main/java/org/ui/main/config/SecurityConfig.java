@@ -14,10 +14,7 @@ import java.util.Arrays;
 
 @Configuration
 public class SecurityConfig {
-	@Bean
-	public RestTemplate restTemplate() {
-		return new RestTemplate();
-	}
+
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 		return httpSecurity
