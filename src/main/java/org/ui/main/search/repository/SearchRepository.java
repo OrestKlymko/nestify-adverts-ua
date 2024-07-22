@@ -5,10 +5,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.ui.main.advert.model.Advert;
-import org.ui.main.search.dto.PriceRangeStatistic;
+import org.ui.main.search.dto.PriceRangeStatisticResponse;
 
 import java.util.List;
-import java.util.Map;
 
 
 @Repository
@@ -24,5 +23,5 @@ public interface SearchRepository extends JpaRepository<Advert, Long> {
             ORDER BY
                 priceRange;
             """, nativeQuery = true)
-    List<PriceRangeStatistic> getStatistic(@Param("interval") int interval);
+    List<PriceRangeStatisticResponse> getStatistic(@Param("interval") int interval);
 }

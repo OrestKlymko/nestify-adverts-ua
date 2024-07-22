@@ -1,6 +1,6 @@
 package org.ui.main.search.dto;
 
-public interface PriceRangeStatistic {
+public interface PriceRangeStatisticResponse {
     Integer getPriceRange();
     Integer getCount();
 }

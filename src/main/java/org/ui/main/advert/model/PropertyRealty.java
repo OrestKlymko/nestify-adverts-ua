@@ -44,89 +44,36 @@ public class PropertyRealty {
     @JsonManagedReference
     private Advert advert;
 
-    public Long getPropertyId() {
-        return propertyId;
-    }
 
     public float getSquare() {
         return square;
     }
 
-    public void setSquare(float square) {
-        this.square = square;
-    }
 
     public int getFloor() {
         return floor;
     }
 
-    public void setFloor(int floor) {
-        this.floor = floor;
-    }
 
     public int getRoom() {
         return room;
     }
 
-    public void setRoom(int room) {
-        this.room = room;
-    }
-
-    public int getRealtyPrice() {
-        return realtyPrice;
-    }
-
-    public void setRealtyPrice(int realtyPrice) {
-        this.realtyPrice = realtyPrice;
-    }
-
-    public int getEnergyPrice() {
-        return energyPrice;
-    }
-
-    public void setEnergyPrice(int energyPrice) {
-        this.energyPrice = energyPrice;
-    }
 
     public int getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(int totalPrice) {
-        this.totalPrice = totalPrice;
-    }
 
     public Set<Features> getFeatures() {
         return features;
     }
 
-    public void setFeatures(Set<Features> features) {
-        this.features = features;
-    }
-
-    public AllowedStatus getWithPets() {
-        return withPets;
-    }
-
-    public void setWithPets(AllowedStatus withPets) {
-        this.withPets = withPets;
-    }
-
-    public AllowedStatus getWithKids() {
-        return withKids;
-    }
-
-    public void setWithKids(AllowedStatus withKids) {
-        this.withKids = withKids;
-    }
 
     public Set<Advantages> getAdvantageList() {
         return advantageList;
     }
 
-    public void setAdvantageList(Set<Advantages> advantageList) {
-        this.advantageList = advantageList;
-    }
 
     public Advert getAdvert() {
         return advert;

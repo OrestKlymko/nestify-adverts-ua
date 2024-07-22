@@ -5,11 +5,9 @@ import org.springframework.stereotype.Service;
 import org.ui.main.map.dto.MapAdvertsResponse;
 import org.ui.main.map.dto.PointMapResponse;
 import org.ui.main.map.repository.MapRepository;
-import org.ui.main.osm.OsmService;
+import org.ui.main.osm.service.OsmService;
 import org.ui.main.osm.dto.LocationInfoResponse;
 
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Service

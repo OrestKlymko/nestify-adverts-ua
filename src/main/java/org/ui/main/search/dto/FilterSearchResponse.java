@@ -2,12 +2,14 @@ package org.ui.main.search.dto;
 
 import org.ui.main.advert.model.enums.Advantage;
 import org.ui.main.advert.model.enums.ApartmentFeature;
+import org.ui.main.advert.model.enums.Status;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 public record FilterSearchResponse(
-		String id,
+		Long id,
 		double longitude,
 		double latitude,
 		long price,
@@ -15,14 +17,14 @@ public record FilterSearchResponse(
 		float square,
 		int floor,
 		String address,
-		List<ApartmentFeature> features,
+		Set<ApartmentFeature> features,
 		String description,
-		List<Advantage> advantagesList,
+		Set<Advantage> advantagesList,
 		LocalDateTime published_at,
 		String district,
 		long buildIdMapTiler,
 		String advertImage,
-		Boolean isApprove,
+		Status status,
 		String agencyCatalog
 ) {
 }

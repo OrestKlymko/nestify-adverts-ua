@@ -23,10 +23,8 @@ public class AiService {
     }
 
     public PageResponse<Advert> getAdvertByAI(AiRequest query) {
-
         String response = runPythonScript(query.text());
         HashMap<String, List<String>> map = new HashMap<>();
-        System.out.println("response = " + response);
         String[] split = response.split("&");
         for (String s : split) {
             String[] pair = s.split("=");

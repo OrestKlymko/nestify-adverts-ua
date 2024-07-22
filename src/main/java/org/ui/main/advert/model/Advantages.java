@@ -28,17 +28,6 @@ public class Advantages {
         return advantages;
     }
 
-    public void setAdvantages(Advantage advantages) {
-        this.advantages = advantages;
-    }
-
-    public PropertyRealty getPropertyRealty() {
-        return propertyRealty;
-    }
-
-    public void setPropertyRealty(PropertyRealty propertyRealty) {
-        this.propertyRealty = propertyRealty;
-    }
 
     @Override
     public boolean equals(Object o) {

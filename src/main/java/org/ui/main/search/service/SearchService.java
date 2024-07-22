@@ -7,9 +7,13 @@ import jakarta.persistence.criteria.*;
 import org.hibernate.query.Query;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+import org.ui.main.advert.model.Advantages;
 import org.ui.main.advert.model.Advert;
+import org.ui.main.advert.model.Features;
+import org.ui.main.search.dto.CoordinateResponse;
+import org.ui.main.search.dto.FilterSearchResponse;
 import org.ui.main.search.dto.PageResponse;
-import org.ui.main.search.dto.PriceRangeStatistic;
+import org.ui.main.search.dto.PriceRangeStatisticResponse;
 import org.ui.main.search.repository.SearchRepository;
 
 import java.net.URLDecoder;
@@ -23,6 +27,13 @@ public class SearchService {
     @PersistenceContext
     private EntityManager entityManager;
     private final SearchRepository searchRepository;
+    private final CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+    private final CriteriaQuery<Advert> cq = cb.createQuery(Advert.class);
+    private final Root<Advert> advert = cq.from(Advert.class);
+    private final List<Predicate> predicates = new ArrayList<>();
+    private String sortStrategy = "newest";
+    private long priceFrom = 0;
+    private long priceTo = Integer.MAX_VALUE;
 
 
     public SearchService(SearchRepository searchRepository) {
@@ -31,15 +42,68 @@ public class SearchService {
 
 
     public PageResponse<Advert> filterSearchForm(Map<String, List<String>> urlParameters) {
-        String sortStrategy = "newest";
         int limit = 12;
-        long priceFrom = 0;
-        long priceTo = Integer.MAX_VALUE;
 
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Advert> cq = cb.createQuery(Advert.class);
-        Root<Advert> advert = cq.from(Advert.class);
-        List<Predicate> predicates = new ArrayList<>();
+        applyParameters(urlParameters);
+        applySort(sortStrategy, cb, advert, cq);
+
+        predicates.add(cb.greaterThanOrEqualTo(advert.get("propertyRealty").get("totalPrice"), priceFrom));
+        predicates.add(cb.lessThanOrEqualTo(advert.get("propertyRealty").get("totalPrice"), priceTo));
+
+        cq.where(predicates.toArray(new Predicate[0]));
+
+        int offset = 0;
+        if (urlParameters.containsKey("offset")) {
+            offset = Integer.parseInt(String.valueOf(urlParameters.get("offset")));
+        }
+
+        TypedQuery<Advert> query = entityManager.createQuery(cq);
+        query.setFirstResult(offset);
+        query.setMaxResults(limit);
+
+        List<Advert> adverts = query.getResultList();
+
+        long total = query.unwrap(Query.class).getResultList().size();
+
+        List<PriceRangeStatisticResponse> statisticFromDatabase = searchRepository.getStatistic(50);
+
+
+        Map<Integer, Integer> statistic = getStatistic(statisticFromDatabase);
+        Long maxPrice = !statisticFromDatabase.isEmpty() ? statisticFromDatabase.get(statisticFromDatabase.size() - 1).getPriceRange() : 0L;
+        List<CoordinateResponse> advertsOnMap = getAdvertsOnMap(adverts);
+        List<FilterSearchResponse> filterSearchResponses = convertToResponse(adverts);
+
+        Pageable pageRequest = PageRequest.of(offset / limit, limit);
+        Page<FilterSearchResponse> page = new PageImpl<>(filterSearchResponses, pageRequest, total);
+
+        return new PageResponse<>(page, sortStrategy, maxPrice, statistic, advertsOnMap);
+    }
+
+    private Map<Integer, Integer> getStatistic(List<PriceRangeStatisticResponse> statisticFromDatabase) {
+        Map<Integer, Integer> statistic = new HashMap<>();
+        for (PriceRangeStatisticResponse priceRangeStatisticResponse : statisticFromDatabase) {
+            statistic.put(priceRangeStatisticResponse.getPriceRange(), priceRangeStatisticResponse.getCount());
+        }
+        return statistic;
+    }
+
+    private void applySort(String sortStrategy, CriteriaBuilder cb, Root<Advert> advert, CriteriaQuery<Advert> cq) {
+        List<Order> orders = new ArrayList<>();
+        switch (sortStrategy) {
+            case "priceAsc":
+                orders.add(cb.asc(advert.get("propertyRealty").get("totalPrice")));
+                break;
+            case "priceDesc":
+                orders.add(cb.desc(advert.get("propertyRealty").get("totalPrice")));
+                break;
+            default:
+                orders.add(cb.desc(advert.get("publishedAt")));
+                break;
+        }
+        cq.orderBy(orders);
+    }
+
+    private void applyParameters(Map<String, List<String>> urlParameters) {
         for (Map.Entry<String, List<String>> parameter : urlParameters.entrySet()) {
             String decodedValue = URLDecoder.decode(String.valueOf(parameter.getValue()), StandardCharsets.UTF_8)
                     .replace("[", "")
@@ -105,63 +169,35 @@ public class SearchService {
             }
         }
         predicates.add(cb.equal((advert.get("status")), "IN_USE"));
-
-//        List<HousePointCoordinates> advertModelList = mongoTemplate.find(query, AdvertModel.class)
-//                .stream()
-//                .map(ModelMapper::mapToHousePointCoordinates)
-//                .toList();
-
-        applySort(sortStrategy, cb, advert, cq);
-
-        predicates.add(cb.greaterThanOrEqualTo(advert.get("propertyRealty").get("totalPrice"), priceFrom));
-        predicates.add(cb.lessThanOrEqualTo(advert.get("propertyRealty").get("totalPrice"), priceTo));
-        cq.where(predicates.toArray(new Predicate[0]));
-
-        int offset = 0;
-        if (urlParameters.containsKey("offset")) {
-            offset = Integer.parseInt(String.valueOf(urlParameters.get("offset")));
-        }
-        TypedQuery<Advert> query = entityManager.createQuery(cq);
-
-        query.setFirstResult(offset);
-        query.setMaxResults(limit);
-
-
-        List<Advert> adverts = query.getResultList();
-        long total = query.unwrap(Query.class).getResultList().size();
-
-        List<PriceRangeStatistic> statisticFromDatabase = searchRepository.getStatistic(50);
-        Map<Integer, Integer> statistic = getStatistic(statisticFromDatabase);
-
-        Long maxPrice = !statisticFromDatabase.isEmpty() ? statisticFromDatabase.get(statisticFromDatabase.size() - 1).getPriceRange() : 0L;
-        Pageable pageRequest = PageRequest.of(offset / limit, limit);
-        Page<Advert> page = new PageImpl<>(adverts, pageRequest, total);
-
-        return new PageResponse<>(page, sortStrategy, maxPrice, statistic, null);
     }
 
-    private Map<Integer, Integer> getStatistic(List<PriceRangeStatistic> statisticFromDatabase) {
-        Map<Integer, Integer> statistic = new HashMap<>();
-        for (PriceRangeStatistic priceRangeStatistic : statisticFromDatabase) {
-            statistic.put(priceRangeStatistic.getPriceRange(), priceRangeStatistic.getCount());
-        }
-        return statistic;
+    private List<CoordinateResponse> getAdvertsOnMap(List<Advert> adverts) {
+        return adverts
+                .stream()
+                .map(advertInList ->
+                        new CoordinateResponse(advertInList.getId(), advertInList.getAddress().getLongitude(), advertInList.getAddress().getLatitude()))
+                .toList();
     }
 
-    private void applySort(String sortStrategy, CriteriaBuilder cb, Root<Advert> advert, CriteriaQuery<Advert> cq) {
-        List<Order> orders = new ArrayList<>();
-        switch (sortStrategy) {
-            case "priceAsc":
-                orders.add(cb.asc(advert.get("propertyRealty").get("totalPrice")));
-                break;
-            case "priceDesc":
-                orders.add(cb.desc(advert.get("propertyRealty").get("totalPrice")));
-                break;
-            default:
-                orders.add(cb.desc(advert.get("publishedAt")));
-                break;
-        }
-        cq.orderBy(orders);
+    private List<FilterSearchResponse> convertToResponse(List<Advert> adverts) {
+      return  adverts.stream().map(advert -> new FilterSearchResponse(
+                advert.getId(),
+                advert.getAddress().getLongitude(),
+                advert.getAddress().getLatitude(),
+                advert.getPropertyRealty().getTotalPrice(),
+                advert.getPropertyRealty().getRoom(),
+                advert.getPropertyRealty().getSquare(),
+                advert.getPropertyRealty().getFloor(),
+                advert.getAddress().getAddressName(),
+                advert.getPropertyRealty().getFeatures().stream().map(Features::getFeature).collect(Collectors.toSet()),
+                advert.getDescription(),
+                advert.getPropertyRealty().getAdvantageList().stream().map(Advantages::getAdvantages).collect(Collectors.toSet()),
+                advert.getPublishedAt(),
+                advert.getAddress().getDistrict(),
+                advert.getAddress().getBuildIdMapTiler(),
+                advert.getImages().stream().findFirst().orElse(""),
+                advert.getStatus(),
+                advert.getSeller().getAgency().getAgencyCatalog()
+        )).toList();
     }
-
 }
