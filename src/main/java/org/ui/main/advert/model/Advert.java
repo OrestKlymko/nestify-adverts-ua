@@ -2,7 +2,6 @@ package org.ui.main.advert.model;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.ui.main.advert.model.enums.Status;
 import org.ui.main.advert.model.enums.TypeRealty;
@@ -133,17 +132,16 @@ public class Advert {
 		this.status = status;
 	}
 
-
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Advert advert = (Advert) o;
-		return Objects.equals(id, advert.id) && typeRealty == advert.typeRealty && Objects.equals(publishedAt, advert.publishedAt) && Objects.equals(editedAt, advert.editedAt) && Objects.equals(description, advert.description) && Objects.equals(finalUrl, advert.finalUrl) && Objects.equals(images, advert.images) && Objects.equals(propertyRealty, advert.propertyRealty) && Objects.equals(address, advert.address) && Objects.equals(seller, advert.seller) && status == advert.status;
+		return Objects.equals(id, advert.id) && typeRealty == advert.typeRealty && Objects.equals(publishedAt, advert.publishedAt) && Objects.equals(editedAt, advert.editedAt) && Objects.equals(description, advert.description) && Objects.equals(finalUrl, advert.finalUrl) && status == advert.status;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, typeRealty, publishedAt, editedAt, description, finalUrl, images, propertyRealty, address, seller, status);
+		return Objects.hash(id, typeRealty, publishedAt, editedAt, description, finalUrl, status);
 	}
 }

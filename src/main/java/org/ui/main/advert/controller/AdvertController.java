@@ -1,9 +1,7 @@
 package org.ui.main.advert.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.ui.main.advert.dto.CreateAdvertRequest;
 import org.ui.main.advert.service.AdvertService;
 import org.ui.main.advert.dto.FinalPageResponse;
 import org.ui.main.exceptions.NotFondException;
@@ -24,6 +22,11 @@ public class AdvertController {
         } catch (NotFondException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @PostMapping
+    public void createAdvert(@RequestBody CreateAdvertRequest advertRequest) {
+        advertService.createAdvert(advertRequest);
     }
 
 }

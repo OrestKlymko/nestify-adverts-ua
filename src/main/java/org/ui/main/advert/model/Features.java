@@ -13,7 +13,7 @@ public class Features {
     private Integer id;
     @Column(name = "FEATURE")
     @Enumerated(EnumType.STRING)
-    private ApartmentFeature feature;
+    private ApartmentFeature featureName;
     @ManyToOne
     @JoinColumn(name = "PROPERTY_ID", referencedColumnName = "ID")
     private PropertyRealty propertyRealty;
@@ -26,8 +26,8 @@ public class Features {
         this.id = id;
     }
 
-    public ApartmentFeature getFeature() {
-        return feature;
+    public ApartmentFeature getFeatureName() {
+        return featureName;
     }
 
 }

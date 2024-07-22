@@ -30,7 +30,7 @@ public class PropertyRealty {
     @Column(name = "TOTAL_PRICE")
     private int totalPrice;
     @OneToMany(mappedBy = "propertyRealty")
-    private Set<Features> features;
+    private List<Features> features;
     @Enumerated(EnumType.STRING)
     @Column(name = "WITH_PETS")
     private AllowedStatus withPets;
@@ -39,41 +39,99 @@ public class PropertyRealty {
     private AllowedStatus withKids;
     @OneToMany(mappedBy = "propertyRealty")
     @JsonManagedReference
-    private Set<Advantages> advantageList;
+    private List<Advantages> advantageList;
     @OneToOne(mappedBy = "propertyRealty")
     @JsonManagedReference
     private Advert advert;
 
 
+    public Long getPropertyId() {
+        return propertyId;
+    }
+
+    public void setPropertyId(Long propertyId) {
+        this.propertyId = propertyId;
+    }
+
     public float getSquare() {
         return square;
     }
 
+    public void setSquare(float square) {
+        this.square = square;
+    }
 
     public int getFloor() {
         return floor;
     }
 
+    public void setFloor(int floor) {
+        this.floor = floor;
+    }
 
     public int getRoom() {
         return room;
     }
 
+    public void setRoom(int room) {
+        this.room = room;
+    }
+
+    public int getRealtyPrice() {
+        return realtyPrice;
+    }
+
+    public void setRealtyPrice(int realtyPrice) {
+        this.realtyPrice = realtyPrice;
+    }
+
+    public int getEnergyPrice() {
+        return energyPrice;
+    }
+
+    public void setEnergyPrice(int energyPrice) {
+        this.energyPrice = energyPrice;
+    }
 
     public int getTotalPrice() {
         return totalPrice;
     }
 
+    public void setTotalPrice(int totalPrice) {
+        this.totalPrice = totalPrice;
+    }
 
-    public Set<Features> getFeatures() {
+    public List<Features> getFeatures() {
         return features;
     }
 
+    public void setFeatures(List<Features> features) {
+        this.features = features;
+    }
 
-    public Set<Advantages> getAdvantageList() {
+    public AllowedStatus getWithPets() {
+        return withPets;
+    }
+
+    public void setWithPets(AllowedStatus withPets) {
+        this.withPets = withPets;
+    }
+
+    public AllowedStatus getWithKids() {
+        return withKids;
+    }
+
+    public void setWithKids(AllowedStatus withKids) {
+        this.withKids = withKids;
+    }
+
+    public List<Advantages> getAdvantageList() {
         return advantageList;
     }
 
+    public void setAdvantageList(List<Advantages> advantageList) {
+        this.advantageList = advantageList;
+    }
 
     public Advert getAdvert() {
         return advert;
@@ -88,11 +146,11 @@ public class PropertyRealty {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PropertyRealty that = (PropertyRealty) o;
-        return Float.compare(square, that.square) == 0 && floor == that.floor && room == that.room && realtyPrice == that.realtyPrice && energyPrice == that.energyPrice && totalPrice == that.totalPrice && Objects.equals(propertyId, that.propertyId) && Objects.equals(features, that.features) && withPets == that.withPets && withKids == that.withKids && Objects.equals(advantageList, that.advantageList) && Objects.equals(advert, that.advert);
+        return Float.compare(square, that.square) == 0 && floor == that.floor && room == that.room && realtyPrice == that.realtyPrice && energyPrice == that.energyPrice && totalPrice == that.totalPrice && Objects.equals(propertyId, that.propertyId) && withPets == that.withPets && withKids == that.withKids;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(propertyId, square, floor, room, realtyPrice, energyPrice, totalPrice, features, withPets, withKids, advantageList, advert);
+        return Objects.hash(propertyId, square, floor, room, realtyPrice, energyPrice, totalPrice, withPets, withKids);
     }
 }

@@ -15,7 +15,7 @@ public class Advantages {
     private Integer id;
     @Column(name = "ADVANTAGE")
     @Enumerated(EnumType.STRING)
-    private Advantage advantages;
+    private Advantage advantageName;
     @ManyToOne
     @JoinColumn(name = "PROPERTY_ID", referencedColumnName = "ID")
     private PropertyRealty propertyRealty;
@@ -24,21 +24,36 @@ public class Advantages {
         return id;
     }
 
-    public Advantage getAdvantages() {
-        return advantages;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
+    public Advantage getAdvantageName() {
+        return advantageName;
+    }
+
+    public void setAdvantageName(Advantage advantageName) {
+        this.advantageName = advantageName;
+    }
+
+    public PropertyRealty getPropertyRealty() {
+        return propertyRealty;
+    }
+
+    public void setPropertyRealty(PropertyRealty propertyRealty) {
+        this.propertyRealty = propertyRealty;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Advantages that = (Advantages) o;
-        return Objects.equals(id, that.id) && advantages == that.advantages && Objects.equals(propertyRealty, that.propertyRealty);
+        return Objects.equals(id, that.id) && advantageName == that.advantageName && Objects.equals(propertyRealty, that.propertyRealty);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, advantages, propertyRealty);
+        return Objects.hash(id, advantageName, propertyRealty);
     }
 }
