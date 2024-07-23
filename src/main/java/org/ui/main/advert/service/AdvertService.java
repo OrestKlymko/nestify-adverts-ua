@@ -44,7 +44,9 @@ public class AdvertService {
         return advertRepository.getAdvertById(id)
                 .orElseThrow(() -> new NotFondException(String.format("Advert with id %s not found", id)));
     }
-    @Transactional
+
+
+
     public void createAdvert(CreateAdvertRequest request) {
         Advert advert = getAdvert(request);
         advertRepository.save(advert);

@@ -1,5 +1,7 @@
 package org.ui.main.advert.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.ui.main.advert.dto.CreateAdvertRequest;
 import org.ui.main.advert.service.AdvertService;
@@ -16,17 +18,19 @@ public class AdvertController {
     }
 
     @GetMapping("/{id}")
-    public FinalPageResponse getAdvert(@PathVariable Long id) {
-        try {
-            return advertService.findAdvertById(id);
-        } catch (NotFondException e) {
-            throw new RuntimeException(e);
-        }
+    public ResponseEntity<FinalPageResponse> getAdvert(@PathVariable Long id) throws NotFondException {
+            return ResponseEntity.ok(advertService.findAdvertById(id));
     }
 
     @PostMapping
     public void createAdvert(@RequestBody CreateAdvertRequest advertRequest) {
         advertService.createAdvert(advertRequest);
+    }
+
+
+    @ExceptionHandler(NotFondException.class)
+    public ResponseEntity<?> handleNotFoundException(NotFondException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 
 }
