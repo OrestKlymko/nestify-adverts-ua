@@ -37,8 +37,10 @@ public interface MapRepository extends JpaRepository<Advert, Long> {
              JOIN seller on adverts.seller_id = seller.id
              LEFT JOIN images on adverts.id = images.advert_id
              LEFT JOIN agency on seller.agency_id = agency.id
-             LEFT JOIN features on property_building.id = features.property_id
-             LEFT JOIN advantages on property_building.id = advantages.property_id
+             LEFT JOIN property_features pf on property_building.id = pf.property_id
+             LEFT JOIN features on pf.feature_id = features.id
+             LEFT JOIN property_advantages pa on property_building.id = pa.property_id
+             LEFT JOIN advantages on pa.advantage_id = advantages.id
              WHERE address.id = :addressId
              GROUP BY 
                  adverts.id,
@@ -56,7 +58,6 @@ public interface MapRepository extends JpaRepository<Advert, Long> {
                  property_building.total_price
             """, nativeQuery = true)
     List<MapAdvertsResponse> getAdvertsOnMap(@Param("addressId") Long addressId);
-
 
     @Query(value = """
             SELECT address.id                                                            as addressHouseId,
