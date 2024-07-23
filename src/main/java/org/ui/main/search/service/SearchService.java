@@ -43,7 +43,7 @@ public class SearchService {
 		Root<Advert> advert = cq.from(Advert.class);
 		List<Predicate> predicates = new ArrayList<>();
 
-		applyParameters(urlParameters, predicates, cb, advert,  sortStrategy, cq);
+		applyParameters(urlParameters, predicates, cb, advert, sortStrategy, cq);
 
 
 		cq.where(predicates.toArray(new Predicate[0]));
@@ -56,10 +56,9 @@ public class SearchService {
 		cq.where(predicates.toArray(new Predicate[0]));
 		TypedQuery<Advert> query = entityManager.createQuery(cq);
 		List<Advert> adverts = query.getResultList();
-		int total = adverts.size();
 
 		Map<Integer, Integer> statistic = getStatistic(adverts);
-		List<CoordinateResponse> advertsOnMap = getAdvertsOnMap(adverts);
+		Integer maxPrice = getMaxPrice(adverts);
 
 		query.setFirstResult(offset);
 		query.setMaxResults(limit);
@@ -67,8 +66,14 @@ public class SearchService {
 //			total += entry.getValue();
 //		}
 
-		List<Advert> withPriceAdvert = adverts.stream().filter(advertInFilter -> advertInFilter.getPropertyRealty().getTotalPrice() >= priceFrom && advertInFilter.getPropertyRealty().getTotalPrice() <= priceTo).toList();
-		Integer maxPrice = getMaxPrice(withPriceAdvert);
+		List<Advert> withPriceAdvert = adverts.stream()
+				.filter(advertInFilter ->
+						advertInFilter.getPropertyRealty().getTotalPrice() >= priceFrom &&
+								advertInFilter.getPropertyRealty().getTotalPrice() <= priceTo)
+				.toList();
+
+		List<CoordinateResponse> advertsOnMap = getAdvertsOnMap(withPriceAdvert);
+		int total = withPriceAdvert.size();
 
 		List<FilterSearchResponse> filterSearchResponses = convertToResponse(withPriceAdvert);
 
@@ -158,10 +163,10 @@ public class SearchService {
 					predicates.add(advert.get("address").get("district").in(splitDistrict));
 					break;
 				case "priceFrom":
-					priceFrom = Long.parseLong(decodedValue);
+					priceFrom = Integer.parseInt(decodedValue);
 					break;
 				case "priceTo":
-					priceTo = Long.parseLong(decodedValue);
+					priceTo = Integer.parseInt(decodedValue);
 					break;
 				case "typeOwner":
 					List<String> typeOwners = Arrays.asList(decodedValue.split(","));
