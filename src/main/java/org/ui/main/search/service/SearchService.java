@@ -61,11 +61,8 @@ public class SearchService {
 		List<Advert> adverts = query.getResultList();
 
 
-		List<PriceRangeStatisticResponse> statisticFromDatabase = searchRepository.getStatistic(50);
-
-
-		Map<Integer, Integer> statistic = getStatistic(statisticFromDatabase);
-		Long maxPrice = !statisticFromDatabase.isEmpty() ? statisticFromDatabase.get(statisticFromDatabase.size() - 1).getPriceRange() : 0L;
+		Map<Integer, Integer> statistic = getStatistic(adverts);
+		Integer maxPrice = getMaxPrice(adverts);
 		List<FilterSearchResponse> filterSearchResponses = convertToResponse(adverts);
 
 		Pageable pageRequest = PageRequest.of(offset / limit, limit);
@@ -74,12 +71,21 @@ public class SearchService {
 		return new PageResponse<>(page, sortStrategy, maxPrice, statistic, advertsOnMap);
 	}
 
-	private Map<Integer, Integer> getStatistic(List<PriceRangeStatisticResponse> statisticFromDatabase) {
-		Map<Integer, Integer> statistic = new HashMap<>();
-		for (PriceRangeStatisticResponse priceRangeStatisticResponse : statisticFromDatabase) {
-			statistic.put(priceRangeStatisticResponse.getPriceRange(), priceRangeStatisticResponse.getCount());
-		}
-		return statistic;
+	private Integer getMaxPrice(List<Advert> adverts) {
+		Optional<Integer> maxPrice = adverts.stream()
+				.max(Comparator.comparingLong(advert -> advert.getPropertyRealty().getTotalPrice()))
+				.map(advert -> advert.getPropertyRealty().getTotalPrice());
+
+		return maxPrice.orElse(0);
+	}
+
+	private Map<Integer, Integer> getStatistic(List<Advert> adverts) {
+		return adverts.stream()
+				.collect(Collectors.groupingBy(
+						advert -> (advert.getPropertyRealty().getTotalPrice() / 50) * 50,
+						TreeMap::new,
+						Collectors.summingInt(advert -> 1)
+				));
 	}
 
 	private void applySort(String sortStrategy, CriteriaBuilder cb, Root<Advert> advert, CriteriaQuery<Advert> cq) {

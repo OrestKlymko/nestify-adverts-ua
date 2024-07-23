@@ -11,7 +11,7 @@ public class PageResponse<Advert> {
 	private String strategySort;
 
 	@JsonProperty("maxPrice")
-	private Long maxPrice;
+	private Integer maxPrice;
 
 	@JsonProperty("statistics")
 	private Map<Integer, Integer> statistics;
@@ -22,7 +22,7 @@ public class PageResponse<Advert> {
 	@JsonProperty("page")
 	private Page<FilterSearchResponse> page;
 
-	public PageResponse(Page<FilterSearchResponse> page, String strategySort, Long maxPrice, Map<Integer, Integer> statistics, List<CoordinateResponse> advertsOnMap) {
+	public PageResponse(Page<FilterSearchResponse> page, String strategySort, Integer maxPrice, Map<Integer, Integer> statistics, List<CoordinateResponse> advertsOnMap) {
 		this.page = page;
 		this.strategySort = strategySort;
 		this.maxPrice = maxPrice;
