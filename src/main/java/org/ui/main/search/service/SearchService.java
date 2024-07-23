@@ -132,6 +132,7 @@ public class SearchService {
 					Optional<Integer> roomOption = roomList.stream().filter(i -> i >= 4).findFirst();
 					List<Integer> lowerRooms = roomList.stream().filter(i -> i < 4).collect(Collectors.toList());
 
+
 					if (roomOption.isPresent() || !lowerRooms.isEmpty()) {
 						if (roomOption.isPresent()) {
 							predicates.add(cb.greaterThanOrEqualTo(advert.get("propertyRealty").get("room"), 4));
