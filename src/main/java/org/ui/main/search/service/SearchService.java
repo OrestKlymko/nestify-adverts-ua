@@ -26,7 +26,8 @@ public class SearchService {
 	@PersistenceContext
 	private EntityManager entityManager;
 	private final SearchRepository searchRepository;
-
+	long priceFrom = 0;
+	long priceTo = Integer.MAX_VALUE;
 
 	public SearchService(SearchRepository searchRepository) {
 		this.searchRepository = searchRepository;
@@ -36,17 +37,13 @@ public class SearchService {
 	public PageResponse<FilterSearchResponse> filterSearchForm(Map<String, List<String>> urlParameters) {
 		int limit = 12;
 		String sortStrategy = "newest";
-		long priceFrom = 0;
-		long priceTo = Integer.MAX_VALUE;
+
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Advert> cq = cb.createQuery(Advert.class);
 		Root<Advert> advert = cq.from(Advert.class);
 		List<Predicate> predicates = new ArrayList<>();
 
 		applyParameters(urlParameters, predicates, cb, advert, priceFrom, priceTo, sortStrategy, cq);
-
-		int total = 0;
-
 
 
 		cq.where(predicates.toArray(new Predicate[0]));
@@ -59,8 +56,9 @@ public class SearchService {
 		cq.where(predicates.toArray(new Predicate[0]));
 		TypedQuery<Advert> query = entityManager.createQuery(cq);
 		List<Advert> adverts = query.getResultList();
+		int total = adverts.size();
 
-
+		Map<Integer, Integer> statistic = getStatistic(adverts);
 		List<CoordinateResponse> advertsOnMap = getAdvertsOnMap(adverts);
 
 		query.setFirstResult(offset);
@@ -69,12 +67,15 @@ public class SearchService {
 //			total += entry.getValue();
 //		}
 
-		List<FilterSearchResponse> filterSearchResponses = convertToResponse(adverts);
+		List<Advert> withPriceAdvert = adverts.stream().filter(advertInFilter -> advertInFilter.getPropertyRealty().getTotalPrice() >= priceFrom && advertInFilter.getPropertyRealty().getTotalPrice() <= priceTo).toList();
+		Integer maxPrice = getMaxPrice(withPriceAdvert);
+
+		List<FilterSearchResponse> filterSearchResponses = convertToResponse(withPriceAdvert);
 
 		Pageable pageRequest = PageRequest.of(offset / limit, limit);
 		Page<FilterSearchResponse> page = new PageImpl<>(filterSearchResponses, pageRequest, total);
 
-		return new PageResponse<>(page, sortStrategy, 0, new HashMap<>(), advertsOnMap);
+		return new PageResponse<>(page, sortStrategy, maxPrice, statistic, advertsOnMap);
 	}
 
 	private Integer getMaxPrice(List<Advert> adverts) {
@@ -183,8 +184,8 @@ public class SearchService {
 					break;
 			}
 		}
-		predicates.add(cb.greaterThanOrEqualTo(advert.get("propertyRealty").get("totalPrice"), priceFrom));
-		predicates.add(cb.lessThanOrEqualTo(advert.get("propertyRealty").get("totalPrice"), priceTo));
+//		predicates.add(cb.greaterThanOrEqualTo(advert.get("propertyRealty").get("totalPrice"), priceFrom));
+//		predicates.add(cb.lessThanOrEqualTo(advert.get("propertyRealty").get("totalPrice"), priceTo));
 		predicates.add(cb.equal((advert.get("status")), "IN_USE"));
 		applySort(sortStrategy, cb, advert, cq);
 	}
