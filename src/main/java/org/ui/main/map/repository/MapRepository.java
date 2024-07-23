@@ -45,10 +45,7 @@ public interface MapRepository extends JpaRepository<Advert, Long> {
 			     property_building.total_price as price,
 			     agency.agency_catalog as agencyCatalog,
 			     adverts.published_at as publishedAt,
-			     (SELECT image_url
-			       FROM images
-			       WHERE images.advert_id = adverts.id
-			       ORDER BY images.id ASC LIMIT 1) as advertImage,
+			     (SELECT image_url FROM unnest(ARRAY_AGG(images.image_url)) LIMIT 1) as advertImage,
 			     ARRAY_AGG(DISTINCT features.feature) as features,
 			     ARRAY_AGG(DISTINCT advantages.advantage) as advantages
 			 FROM adverts
