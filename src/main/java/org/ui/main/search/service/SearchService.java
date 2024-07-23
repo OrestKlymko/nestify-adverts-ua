@@ -113,7 +113,7 @@ public class SearchService {
 				case "rooms":
 					List<Integer> roomList = Arrays.stream(decodedValue.split(","))
 							.map(Integer::parseInt)
-							.toList();
+							.collect(Collectors.toList());
 					Optional<Integer> roomOption = roomList.stream().filter(i -> i >= 4).findFirst();
 					List<Integer> lowerRooms = roomList.stream().filter(i -> i < 4).collect(Collectors.toList());
 
@@ -130,7 +130,15 @@ public class SearchService {
 				case "feature":
 					List<String> features = Arrays.stream(decodedValue.split(","))
 							.collect(Collectors.toList());
-					predicates.add(advert.get("propertyRealty").get("features").in(features));
+					Subquery<Long> subquery = cq.subquery(Long.class);
+					Root<Advert> subRoot = subquery.from(Advert.class);
+					Join<Object, Object> subFeaturesJoin = subRoot.join("propertyRealty").join("features");
+					subquery.select(subRoot.get("id"))
+							.where(subRoot.get("id").in(advert.get("id")),
+									subFeaturesJoin.get("featureName").in(features))
+							.groupBy(subRoot.get("id"))
+							.having(cb.equal(cb.countDistinct(subFeaturesJoin.get("featureName")), features.size()));
+					predicates.add(advert.get("id").in(subquery));
 					break;
 				case "districts":
 					String[] splitDistrict = decodedValue.split(",");
