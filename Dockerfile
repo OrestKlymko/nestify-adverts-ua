@@ -1,20 +1,22 @@
-# Використовуємо базовий образ OpenJDK на основі Debian
-FROM openjdk:17-slim
+# Базовий образ
+FROM openjdk:17-jdk-slim
 
-# Оновлюємо пакетний індекс і встановлюємо Python та venv
-RUN apt-get update && apt-get install -y python3 python3-venv
+# Встановлення Python та необхідних пакетів
+RUN apt-get update && apt-get install -y \
+    python3 \
+    python3-venv \
+    python3-pip
 
-# Копіюємо ваш jar-файл і скрипти в образ
+# Створення робочої директорії
+WORKDIR /app
+
+# Додавання файлів додатку
 ADD target/main-0.0.1-SNAPSHOT.jar /app/app.jar
 ADD scripts /app/scripts
 
-## Встановлюємо Python-залежності у віртуальне середовище
+# Створення віртуального середовища та встановлення залежностей
 RUN python3 -m venv /app/scripts/venv \
-    && /bin/bash -c "source /app/scripts/venv/bin/activate" \
     && /app/scripts/venv/bin/pip install -r /app/scripts/requirements.txt
 
-# Встановлюємо робочу директорію
-WORKDIR /app
-
-# Вказуємо команду для запуску Java програми
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Запуск додатку
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
