@@ -60,14 +60,14 @@ public interface MapRepository extends JpaRepository<Advert, Long> {
     List<MapAdvertsResponse> getAdvertsOnMap(@Param("addressId") Long addressId);
 
     @Query(value = """
-            SELECT address.id                                                            as addressHouseId,
-                   address.build_map_tiler                                               as buildIdMapTiler,
-                   address.longitude                                                     as longitude,
-                   address.latitude                                                      as latitude,
+            SELECT address.id as addressHouseId,
+                   address.build_map_tiler as buildIdMapTiler,
+                   address.longitude as longitude,
+                   address.latitude as latitude,
                    (SELECT MIN(property_building.total_price)
                     FROM property_building
-                             JOIN adverts ON property_building.id = adverts.property_id
-                              WHERE address.id IN (:ids)) as lowerPrice
+                    JOIN adverts ON property_building.id = adverts.property_id
+                    WHERE adverts.address_id = address.id) as lowerPrice
             FROM address
             WHERE address.id IN (:ids)
             GROUP BY address.id,
