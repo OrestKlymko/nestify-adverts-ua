@@ -43,7 +43,7 @@ public class SearchService {
 		Root<Advert> advert = cq.from(Advert.class);
 		List<Predicate> predicates = new ArrayList<>();
 
-		applyParameters(urlParameters, predicates, cb, advert, priceFrom, priceTo, sortStrategy, cq);
+		applyParameters(urlParameters, predicates, cb, advert,  sortStrategy, cq);
 
 
 		cq.where(predicates.toArray(new Predicate[0]));
@@ -111,7 +111,7 @@ public class SearchService {
 		cq.orderBy(orders);
 	}
 
-	private void applyParameters(Map<String, List<String>> urlParameters, List<Predicate> predicates, CriteriaBuilder cb, Root<Advert> advert, Long priceFrom, Long priceTo, String sortStrategy, CriteriaQuery<Advert> cq) {
+	private void applyParameters(Map<String, List<String>> urlParameters, List<Predicate> predicates, CriteriaBuilder cb, Root<Advert> advert, String sortStrategy, CriteriaQuery<Advert> cq) {
 		for (Map.Entry<String, List<String>> parameter : urlParameters.entrySet()) {
 			String decodedValue = URLDecoder.decode(String.valueOf(parameter.getValue()), StandardCharsets.UTF_8)
 					.replace("[", "")
