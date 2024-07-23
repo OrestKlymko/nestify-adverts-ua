@@ -43,6 +43,10 @@ public class SearchService {
 		CriteriaQuery<Advert> cq = cb.createQuery(Advert.class);
 		Root<Advert> advert = cq.from(Advert.class);
 		List<Predicate> predicates = new ArrayList<>();
+		boolean isSort = urlParameters.containsKey("sort");
+		if (isSort) {
+			sortStrategy = urlParameters.get("sort").get(0);
+		}
 		applyParameters(urlParameters, predicates, cb, advert, priceFrom, priceTo, sortStrategy);
 		applySort(sortStrategy, cb, advert, cq);
 
@@ -62,7 +66,6 @@ public class SearchService {
 		query.setMaxResults(limit);
 
 		List<Advert> adverts = query.getResultList();
-
 
 
 		List<PriceRangeStatisticResponse> statisticFromDatabase = searchRepository.getStatistic(50);
