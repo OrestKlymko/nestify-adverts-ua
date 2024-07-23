@@ -66,7 +66,8 @@ public interface MapRepository extends JpaRepository<Advert, Long> {
                    address.latitude                                                      as latitude,
                    (SELECT MIN(property_building.total_price)
                     FROM property_building
-                             JOIN adverts ON property_building.id = adverts.property_id) as lowerPrice
+                             JOIN adverts ON property_building.id = adverts.property_id
+                              WHERE address.id IN (:ids)) as lowerPrice
             FROM address
             WHERE address.id IN (:ids)
             GROUP BY address.id,
