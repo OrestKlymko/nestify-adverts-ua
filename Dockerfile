@@ -16,6 +16,8 @@ ADD scripts /app/scripts
 
 # Створення віртуального середовища та встановлення залежностей
 RUN python3 -m venv /app/scripts/venv \
+    && /app/scripts/venv/bin/python -m ensurepip \
+    && /app/scripts/venv/bin/pip install --upgrade pip \
     && /app/scripts/venv/bin/pip install -r /app/scripts/requirements.txt
 
 # Запуск додатку
