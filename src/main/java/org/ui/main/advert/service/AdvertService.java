@@ -80,10 +80,11 @@ public class AdvertService {
             Optional<Agency> agencyInDb = agencyRepository.getAgencyByAgencyNameIsIgnoreCase(request.seller().agencyName());
             if (agencyInDb.isPresent()) {
                 seller.setAgency(agencyInDb.get());
-                return seller;
+                return sellerRepository.save(seller);
             }
             Agency agency = new Agency();
             agency.setAgencyName(request.seller().agencyName());
+            agency.setAgencyCatalog("/");
             Agency newAgency = agencyRepository.save(agency);
             seller.setAgency(newAgency);
         }
