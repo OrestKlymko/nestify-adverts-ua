@@ -45,6 +45,20 @@ public class SearchService {
 
 		applyParameters(urlParameters, predicates, cb, advert, priceFrom, priceTo, sortStrategy, cq);
 
+		TypedQuery<Advert> query = entityManager.createQuery(cq);
+		List<Advert> adverts = query.getResultList();
+		Map<Integer, Integer> statistic = getStatistic(adverts);
+		Integer maxPrice = getMaxPrice(adverts);
+		int total=0;
+		for (Map.Entry<Integer, Integer> entry : statistic.entrySet()) {
+			total+=entry.getKey().intValue();
+		}
+
+		predicates.add(cb.greaterThanOrEqualTo(advert.get("propertyRealty").get("totalPrice"), priceFrom));
+		predicates.add(cb.lessThanOrEqualTo(advert.get("propertyRealty").get("totalPrice"), priceTo));
+
+
+
 		cq.where(predicates.toArray(new Predicate[0]));
 
 		int offset = 0;
@@ -52,17 +66,12 @@ public class SearchService {
 			offset = Integer.parseInt(String.valueOf(urlParameters.get("offset")));
 		}
 
-		TypedQuery<Advert> query = entityManager.createQuery(cq);
-		long total = query.getResultList().size();
 		List<CoordinateResponse> advertsOnMap = getAdvertsOnMap(query.getResultList());
+
 		query.setFirstResult(offset);
 		query.setMaxResults(limit);
 
-		List<Advert> adverts = query.getResultList();
 
-
-		Map<Integer, Integer> statistic = getStatistic(adverts);
-		Integer maxPrice = getMaxPrice(adverts);
 		List<FilterSearchResponse> filterSearchResponses = convertToResponse(adverts);
 
 		Pageable pageRequest = PageRequest.of(offset / limit, limit);
@@ -178,8 +187,6 @@ public class SearchService {
 			}
 		}
 		predicates.add(cb.equal((advert.get("status")), "IN_USE"));
-		predicates.add(cb.greaterThanOrEqualTo(advert.get("propertyRealty").get("totalPrice"), priceFrom));
-		predicates.add(cb.lessThanOrEqualTo(advert.get("propertyRealty").get("totalPrice"), priceTo));
 		applySort(sortStrategy, cb, advert, cq);
 	}
 
