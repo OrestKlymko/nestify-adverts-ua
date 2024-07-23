@@ -4,7 +4,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
-import org.hibernate.query.Query;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.ui.main.advert.model.Advantages;
@@ -43,15 +42,8 @@ public class SearchService {
 		CriteriaQuery<Advert> cq = cb.createQuery(Advert.class);
 		Root<Advert> advert = cq.from(Advert.class);
 		List<Predicate> predicates = new ArrayList<>();
-		boolean isSort = urlParameters.containsKey("sort");
-		if (isSort) {
-			sortStrategy = urlParameters.get("sort").get(0);
-		}
-		applyParameters(urlParameters, predicates, cb, advert, priceFrom, priceTo, sortStrategy);
-		applySort(sortStrategy, cb, advert, cq);
 
-		predicates.add(cb.greaterThanOrEqualTo(advert.get("propertyRealty").get("totalPrice"), priceFrom));
-		predicates.add(cb.lessThanOrEqualTo(advert.get("propertyRealty").get("totalPrice"), priceTo));
+		applyParameters(urlParameters, predicates, cb, advert, priceFrom, priceTo, sortStrategy, cq);
 
 		cq.where(predicates.toArray(new Predicate[0]));
 
@@ -106,7 +98,7 @@ public class SearchService {
 		cq.orderBy(orders);
 	}
 
-	private void applyParameters(Map<String, List<String>> urlParameters, List<Predicate> predicates, CriteriaBuilder cb, Root<Advert> advert, Long priceFrom, Long priceTo, String sortStrategy) {
+	private void applyParameters(Map<String, List<String>> urlParameters, List<Predicate> predicates, CriteriaBuilder cb, Root<Advert> advert, Long priceFrom, Long priceTo, String sortStrategy, CriteriaQuery<Advert> cq) {
 		for (Map.Entry<String, List<String>> parameter : urlParameters.entrySet()) {
 			String decodedValue = URLDecoder.decode(String.valueOf(parameter.getValue()), StandardCharsets.UTF_8)
 					.replace("[", "")
@@ -172,6 +164,9 @@ public class SearchService {
 			}
 		}
 		predicates.add(cb.equal((advert.get("status")), "IN_USE"));
+		predicates.add(cb.greaterThanOrEqualTo(advert.get("propertyRealty").get("totalPrice"), priceFrom));
+		predicates.add(cb.lessThanOrEqualTo(advert.get("propertyRealty").get("totalPrice"), priceTo));
+		applySort(sortStrategy, cb, advert, cq);
 	}
 
 	private List<CoordinateResponse> getAdvertsOnMap(List<Advert> adverts) {
