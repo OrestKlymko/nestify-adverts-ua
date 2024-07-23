@@ -10,4 +10,4 @@ source scripts/venv/bin/activate
 pip install -r scripts/requirements.txt
 
 # Запуск Java програми
-java -jar target/backend-0.0.1-SNAPSHOT.jar
+java -jar target/main-0.0.1-SNAPSHOT.jar
