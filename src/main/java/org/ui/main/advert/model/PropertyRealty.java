@@ -29,7 +29,10 @@ public class PropertyRealty {
     private int energyPrice;
     @Column(name = "TOTAL_PRICE")
     private int totalPrice;
-    @OneToMany(mappedBy = "propertyRealty")
+    @ManyToMany
+    @JoinTable(name = "PROPERTY_FEATURES",
+            joinColumns = @JoinColumn(name = "PROPERTY_ID"),
+            inverseJoinColumns = @JoinColumn(name = "FEATURE_ID"))
     private List<Features> features;
     @Enumerated(EnumType.STRING)
     @Column(name = "WITH_PETS")
@@ -37,8 +40,10 @@ public class PropertyRealty {
     @Enumerated(EnumType.STRING)
     @Column(name = "WITH_KIDS")
     private AllowedStatus withKids;
-    @OneToMany(mappedBy = "propertyRealty")
-    @JsonManagedReference
+    @ManyToMany
+    @JoinTable(name = "PROPERTY_ADVANTAGES",
+    joinColumns = @JoinColumn(name = "PROPERTY_ID"),
+    inverseJoinColumns = @JoinColumn(name = "ADVANTAGE_ID"))
     private List<Advantages> advantageList;
     @OneToOne(mappedBy = "propertyRealty")
     @JsonManagedReference

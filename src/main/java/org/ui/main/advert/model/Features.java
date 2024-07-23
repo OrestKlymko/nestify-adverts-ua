@@ -4,6 +4,8 @@ package org.ui.main.advert.model;
 import jakarta.persistence.*;
 import org.ui.main.advert.model.enums.ApartmentFeature;
 
+import java.util.List;
+
 @Entity
 @Table(name = "FEATURES")
 public class Features {
@@ -14,9 +16,8 @@ public class Features {
     @Column(name = "FEATURE")
     @Enumerated(EnumType.STRING)
     private ApartmentFeature featureName;
-    @ManyToOne
-    @JoinColumn(name = "PROPERTY_ID", referencedColumnName = "ID")
-    private PropertyRealty propertyRealty;
+    @ManyToMany(mappedBy = "features")
+    private List<PropertyRealty> propertyRealty;
 
     public Integer getId() {
         return id;

@@ -4,6 +4,7 @@ package org.ui.main.advert.model;
 import jakarta.persistence.*;
 import org.ui.main.advert.model.enums.Advantage;
 
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -16,9 +17,8 @@ public class Advantages {
     @Column(name = "ADVANTAGE")
     @Enumerated(EnumType.STRING)
     private Advantage advantageName;
-    @ManyToOne
-    @JoinColumn(name = "PROPERTY_ID", referencedColumnName = "ID")
-    private PropertyRealty propertyRealty;
+   @ManyToMany(mappedBy = "advantageList")
+    private List<PropertyRealty> propertyRealty;
 
     public Integer getId() {
         return id;
@@ -36,11 +36,11 @@ public class Advantages {
         this.advantageName = advantageName;
     }
 
-    public PropertyRealty getPropertyRealty() {
+    public List<PropertyRealty> getPropertyRealty() {
         return propertyRealty;
     }
 
-    public void setPropertyRealty(PropertyRealty propertyRealty) {
+    public void setPropertyRealty(List<PropertyRealty> propertyRealty) {
         this.propertyRealty = propertyRealty;
     }
 
