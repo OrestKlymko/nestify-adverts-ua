@@ -57,18 +57,16 @@ public class SearchService {
 		}
 
 		TypedQuery<Advert> query = entityManager.createQuery(cq);
+		long total = query.getResultList().size();
 		query.setFirstResult(offset);
 		query.setMaxResults(limit);
 
 		List<Advert> adverts = query.getResultList();
-		CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
-		Root<Advert> countRoot = countQuery.from(Advert.class);
-		countQuery.select(cb.count(countRoot));
-		List<Predicate> countPredicates = new ArrayList<>(predicates);
-		countQuery.where(countPredicates.toArray(new Predicate[0]));
-		Long total = entityManager.createQuery(countQuery).getSingleResult();
+
+
 
 		List<PriceRangeStatisticResponse> statisticFromDatabase = searchRepository.getStatistic(50);
+
 
 		Map<Integer, Integer> statistic = getStatistic(statisticFromDatabase);
 		Long maxPrice = !statisticFromDatabase.isEmpty() ? statisticFromDatabase.get(statisticFromDatabase.size() - 1).getPriceRange() : 0L;
