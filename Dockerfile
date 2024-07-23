@@ -2,7 +2,7 @@
 FROM ubuntu:latest
 
 # Оновлюємо пакетний індекс і встановлюємо Python та venv
-RUN #apt-get update && apt-get install -y python3 python3-venv
+#RUN #apt-get update && apt-get install -y python3 python3-venv
 
 # Копіюємо ваш jar-файл і скрипти в образ
 ADD target/main-0.0.1-SNAPSHOT.jar /app/app.jar
