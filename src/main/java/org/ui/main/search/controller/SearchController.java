@@ -3,6 +3,7 @@ package org.ui.main.search.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.ui.main.advert.model.Advert;
+import org.ui.main.search.dto.FilterSearchResponse;
 import org.ui.main.search.dto.PageResponse;
 import org.ui.main.search.service.SearchService;
 
@@ -17,7 +18,7 @@ public class SearchController {
 	private SearchService searchService;
 
 	@GetMapping
-	public PageResponse<Advert> filterSearchForm(@RequestParam Map<String, List<String>> searchRequestDto) {
+	public PageResponse<FilterSearchResponse> filterSearchForm(@RequestParam Map<String, List<String>> searchRequestDto) {
 		return searchService.filterSearchForm(searchRequestDto);
 	}
 

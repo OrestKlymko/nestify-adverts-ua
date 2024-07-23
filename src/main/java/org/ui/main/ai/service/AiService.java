@@ -4,6 +4,7 @@ package org.ui.main.ai.service;
 import org.springframework.stereotype.Service;
 import org.ui.main.advert.model.Advert;
 import org.ui.main.ai.dto.AiRequest;
+import org.ui.main.search.dto.FilterSearchResponse;
 import org.ui.main.search.dto.PageResponse;
 import org.ui.main.search.service.SearchService;
 
@@ -22,7 +23,7 @@ public class AiService {
         this.searchService = searchService;
     }
 
-    public PageResponse<Advert> getAdvertByAI(AiRequest query) {
+    public PageResponse<FilterSearchResponse> getAdvertByAI(AiRequest query) {
         String response = runPythonScript(query.text());
         HashMap<String, List<String>> map = new HashMap<>();
         String[] split = response.split("&");

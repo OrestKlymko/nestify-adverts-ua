@@ -1,7 +1,6 @@
 package org.ui.main.advert.service;
 
 
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import org.ui.main.advert.dto.CreateAdvertRequest;
 import org.ui.main.advert.dto.FinalPageResponse;

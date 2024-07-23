@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import org.ui.main.advert.model.Advert;
 import org.ui.main.ai.dto.AiRequest;
 import org.ui.main.ai.service.AiService;
+import org.ui.main.search.dto.FilterSearchResponse;
 import org.ui.main.search.dto.PageResponse;
 
 @RestController
@@ -17,7 +18,7 @@ public class AiController {
     }
 
     @PostMapping
-    public PageResponse<Advert> getAiResult(@RequestBody AiRequest request){
+    public PageResponse<FilterSearchResponse> getAiResult(@RequestBody AiRequest request){
         return aiService.getAdvertByAI(request);
     }
 }

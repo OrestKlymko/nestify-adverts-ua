@@ -33,7 +33,7 @@ public class SearchService {
 	}
 
 
-	public PageResponse<Advert> filterSearchForm(Map<String, List<String>> urlParameters) {
+	public PageResponse<FilterSearchResponse> filterSearchForm(Map<String, List<String>> urlParameters) {
 		int limit = 12;
 		String sortStrategy = "newest";
 		long priceFrom = 0;
@@ -130,7 +130,7 @@ public class SearchService {
 				case "feature":
 					List<String> features = Arrays.stream(decodedValue.split(","))
 							.collect(Collectors.toList());
-					predicates.add(advert.get("propertyRealty").get("room").in(features));
+					predicates.add(advert.get("propertyRealty").get("features").in(features));
 					break;
 				case "districts":
 					String[] splitDistrict = decodedValue.split(",");
