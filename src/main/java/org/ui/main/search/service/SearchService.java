@@ -27,11 +27,9 @@ public class SearchService {
 	private EntityManager entityManager;
 	private final SearchRepository searchRepository;
 
-
 	public SearchService(SearchRepository searchRepository) {
 		this.searchRepository = searchRepository;
 	}
-
 
 	public PageResponse<FilterSearchResponse> filterSearchForm(Map<String, List<String>> urlParameters) {
 		int limit = 12;
@@ -45,33 +43,37 @@ public class SearchService {
 
 		applyParameters(urlParameters, predicates, cb, advert, priceFrom, priceTo, sortStrategy, cq);
 
-		TypedQuery<Advert> query = entityManager.createQuery(cq);
-		List<Advert> adverts = query.getResultList();
-		Map<Integer, Integer> statistic = getStatistic(adverts);
-		Integer maxPrice = getMaxPrice(adverts);
-		int total=0;
-		for (Map.Entry<Integer, Integer> entry : statistic.entrySet()) {
-			total+=entry.getKey().intValue();
-		}
+		// Запит для отримання статистики без урахування цін
+		CriteriaQuery<Advert> statisticCq = cb.createQuery(Advert.class);
+		Root<Advert> statisticAdvert = statisticCq.from(Advert.class);
+		List<Predicate> statisticPredicates = new ArrayList<>();
+		applyParameters(urlParameters, statisticPredicates, cb, statisticAdvert, null, null, sortStrategy, statisticCq);
+		statisticCq.where(statisticPredicates.toArray(new Predicate[0]));
 
+		TypedQuery<Advert> statisticQuery = entityManager.createQuery(statisticCq);
+		List<Advert> statisticAdverts = statisticQuery.getResultList();
+		Map<Integer, Integer> statistic = getStatistic(statisticAdverts);
+
+		// Запит для підрахунку загальної кількості оголошень з урахуванням ціни
 		predicates.add(cb.greaterThanOrEqualTo(advert.get("propertyRealty").get("totalPrice"), priceFrom));
 		predicates.add(cb.lessThanOrEqualTo(advert.get("propertyRealty").get("totalPrice"), priceTo));
-
-
-
 		cq.where(predicates.toArray(new Predicate[0]));
+
+		TypedQuery<Advert> query = entityManager.createQuery(cq);
+		int total = query.getResultList().size();
+		query.setFirstResult(0);
+		query.setMaxResults(Integer.MAX_VALUE);
+		List<CoordinateResponse> advertsOnMap = getAdvertsOnMap(query.getResultList());
 
 		int offset = 0;
 		if (urlParameters.containsKey("offset")) {
 			offset = Integer.parseInt(String.valueOf(urlParameters.get("offset")));
 		}
-
-		List<CoordinateResponse> advertsOnMap = getAdvertsOnMap(query.getResultList());
-
 		query.setFirstResult(offset);
 		query.setMaxResults(limit);
+		List<Advert> adverts = query.getResultList();
 
-
+		Integer maxPrice = getMaxPrice(adverts);
 		List<FilterSearchResponse> filterSearchResponses = convertToResponse(adverts);
 
 		Pageable pageRequest = PageRequest.of(offset / limit, limit);
@@ -81,11 +83,10 @@ public class SearchService {
 	}
 
 	private Integer getMaxPrice(List<Advert> adverts) {
-		Optional<Integer> maxPrice = adverts.stream()
-				.max(Comparator.comparingLong(advert -> advert.getPropertyRealty().getTotalPrice()))
-				.map(advert -> advert.getPropertyRealty().getTotalPrice());
-
-		return maxPrice.orElse(0);
+		return adverts.stream()
+				.map(advert -> advert.getPropertyRealty().getTotalPrice())
+				.max(Integer::compareTo)
+				.orElse(0);
 	}
 
 	private Map<Integer, Integer> getStatistic(List<Advert> adverts) {
@@ -131,7 +132,6 @@ public class SearchService {
 							.collect(Collectors.toList());
 					Optional<Integer> roomOption = roomList.stream().filter(i -> i >= 4).findFirst();
 					List<Integer> lowerRooms = roomList.stream().filter(i -> i < 4).collect(Collectors.toList());
-
 
 					if (roomOption.isPresent() || !lowerRooms.isEmpty()) {
 						if (roomOption.isPresent()) {
@@ -192,11 +192,10 @@ public class SearchService {
 	}
 
 	private List<CoordinateResponse> getAdvertsOnMap(List<Advert> adverts) {
-		return adverts
-				.stream()
+		return adverts.stream()
 				.map(advertInList ->
 						new CoordinateResponse(advertInList.getId(), advertInList.getAddress().getLongitude(), advertInList.getAddress().getLatitude()))
-				.toList();
+				.collect(Collectors.toList());
 	}
 
 	private List<FilterSearchResponse> convertToResponse(List<Advert> adverts) {
@@ -218,6 +217,6 @@ public class SearchService {
 				advert.getImages().stream().findFirst().orElse(""),
 				advert.getStatus(),
 				advert.getSeller().getAgency().getAgencyCatalog()
-		)).toList();
+		)).collect(Collectors.toList());
 	}
 }
