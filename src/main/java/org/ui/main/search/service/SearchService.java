@@ -85,10 +85,10 @@ public class SearchService {
 	private void applySort(String sortStrategy, CriteriaBuilder cb, Root<Advert> advert, CriteriaQuery<Advert> cq) {
 		List<Order> orders = new ArrayList<>();
 		switch (sortStrategy) {
-			case "highPrice":
+			case "lowPrice":
 				orders.add(cb.asc(advert.get("propertyRealty").get("totalPrice")));
 				break;
-			case "lowPrice":
+			case "highPrice":
 				orders.add(cb.desc(advert.get("propertyRealty").get("totalPrice")));
 				break;
 			default:
