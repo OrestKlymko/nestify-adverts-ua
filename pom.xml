@@ -100,10 +100,10 @@
                             <goal>exec</goal>
                         </goals>
                         <configuration>
-                            <executable>bash</executable>
+                            <executable>cmd</executable>
                             <arguments>
-                                <argument>-c</argument>
-                                <argument>cd scripts &amp;&amp; python3 -m venv venv &amp;&amp; source venv/bin/activate &amp;&amp; pip install -r requirements.txt</argument>
+                                <argument>/c</argument>
+                                <argument>cd scripts &amp;&amp; python -m venv venv &amp;&amp; venv\Scripts\activate &amp;&amp; pip install -r requirements.txt</argument>
                             </arguments>
                         </configuration>
                     </execution>
@@ -111,5 +111,6 @@
             </plugin>
         </plugins>
     </build>
+
 
 </project>

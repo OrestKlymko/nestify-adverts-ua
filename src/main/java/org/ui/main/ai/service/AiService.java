@@ -1,12 +1,10 @@
 package org.ui.main.ai.service;
 
-
 import org.springframework.stereotype.Service;
-import org.ui.main.advert.model.Advert;
-import org.ui.main.ai.dto.AiRequest;
 import org.ui.main.search.dto.FilterSearchResponse;
 import org.ui.main.search.dto.PageResponse;
 import org.ui.main.search.service.SearchService;
+import org.ui.main.ai.dto.AiRequest;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -44,6 +42,10 @@ public class AiService {
             String pythonInterpreter = Paths.get(currentDir, "scripts", "venv", "bin", "python3").toString();
             String scriptPath = Paths.get(currentDir, "scripts", "generate_query.py").toString();
 
+            // Додайте логування для перевірки шляхів
+            System.out.println("Python interpreter: " + pythonInterpreter);
+            System.out.println("Script path: " + scriptPath);
+
             ProcessBuilder pb = new ProcessBuilder(pythonInterpreter, scriptPath, text);
             Process p = pb.start();
 
@@ -65,6 +67,11 @@ public class AiService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        // Додайте логування для перевірки результату
+        System.out.println("Script output: " + result.toString());
+        System.out.println("Script errors: " + error.toString());
+
         return result.toString();
     }
 }
