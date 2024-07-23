@@ -54,6 +54,7 @@ public class SearchService {
 
 		TypedQuery<Advert> query = entityManager.createQuery(cq);
 		long total = query.getResultList().size();
+		List<CoordinateResponse> advertsOnMap = getAdvertsOnMap(query.getResultList());
 		query.setFirstResult(offset);
 		query.setMaxResults(limit);
 
@@ -65,7 +66,6 @@ public class SearchService {
 
 		Map<Integer, Integer> statistic = getStatistic(statisticFromDatabase);
 		Long maxPrice = !statisticFromDatabase.isEmpty() ? statisticFromDatabase.get(statisticFromDatabase.size() - 1).getPriceRange() : 0L;
-		List<CoordinateResponse> advertsOnMap = getAdvertsOnMap(adverts);
 		List<FilterSearchResponse> filterSearchResponses = convertToResponse(adverts);
 
 		Pageable pageRequest = PageRequest.of(offset / limit, limit);
