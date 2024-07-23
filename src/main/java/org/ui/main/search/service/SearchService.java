@@ -66,7 +66,7 @@ public class SearchService {
 //			total += entry.getValue();
 //		}
 
-		List<Advert> withPriceAdvert = adverts.stream()
+		List<Advert> withPriceAdvert = query.getResultList().stream()
 				.filter(advertInFilter ->
 						advertInFilter.getPropertyRealty().getTotalPrice() >= priceFrom &&
 								advertInFilter.getPropertyRealty().getTotalPrice() <= priceTo)
