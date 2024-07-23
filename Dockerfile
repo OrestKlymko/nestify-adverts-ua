@@ -1,5 +1,5 @@
 # Використовуємо базовий образ OpenJDK на основі Debian
-FROM ubuntu:latest
+FROM openjdk:17-slim
 
 # Оновлюємо пакетний індекс і встановлюємо Python та venv
 #RUN #apt-get update && apt-get install -y python3 python3-venv
