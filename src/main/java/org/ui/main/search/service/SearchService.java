@@ -66,14 +66,15 @@ public class SearchService {
 //			total += entry.getValue();
 //		}
 
-		List<Advert> withPriceAdvert = query.getResultList().stream()
+		List<Advert> withPriceAdvert = adverts.stream()
 				.filter(advertInFilter ->
 						advertInFilter.getPropertyRealty().getTotalPrice() >= priceFrom &&
 								advertInFilter.getPropertyRealty().getTotalPrice() <= priceTo)
 				.toList();
 
+		List<Advert> resultList = query.getResultList();
 		List<CoordinateResponse> advertsOnMap = getAdvertsOnMap(withPriceAdvert);
-		int total = withPriceAdvert.size();
+		int total = resultList.size();
 
 		List<FilterSearchResponse> filterSearchResponses = convertToResponse(withPriceAdvert);
 
