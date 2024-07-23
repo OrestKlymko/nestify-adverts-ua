@@ -20,7 +20,7 @@ public record FilterSearchResponse(
 		Set<ApartmentFeature> features,
 		String description,
 		Set<Advantage> advantagesList,
-		LocalDateTime published_at,
+		LocalDateTime publishedAt,
 		String district,
 		long buildIdMapTiler,
 		String advertImage,
