@@ -14,7 +14,7 @@ public interface MapAdvertsResponse {
     Float getSquare();
     Integer getFloor();
     Integer getRoom();
-    Integer getTotalPrice();
+    Integer getPrice();
     List<String> getFeatures();
     List<String> getAdvantages();
     List<String> getImages();

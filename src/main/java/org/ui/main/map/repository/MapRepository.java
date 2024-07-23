@@ -25,7 +25,7 @@ public interface MapRepository extends JpaRepository<Advert, Long> {
                  property_building.square as square,
                  property_building.floor as floor,
                  property_building.room as room,
-                 property_building.total_price as totalPrice,
+                 property_building.total_price as price,
                  agency.agency_catalog as agencyCatalog,
                  adverts.published_at as publishedAt,
                  ARRAY_AGG(DISTINCT images.image_url) as images,
