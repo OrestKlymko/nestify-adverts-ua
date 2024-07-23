@@ -49,19 +49,15 @@ public class SearchService {
 		List<Advert> adverts = query.getResultList();
 		Map<Integer, Integer> statistic = getStatistic(adverts);
 
-		int total=0;
+		int total = 0;
 		for (Map.Entry<Integer, Integer> entry : statistic.entrySet()) {
-			total+=entry.getValue().intValue();
+			total += entry.getValue().intValue();
 		}
-
-		predicates.add(cb.greaterThanOrEqualTo(advert.get("propertyRealty").get("totalPrice"), priceFrom));
-		predicates.add(cb.lessThanOrEqualTo(advert.get("propertyRealty").get("totalPrice"), priceTo));
-
 
 
 		cq.where(predicates.toArray(new Predicate[0]));
 		TypedQuery<Advert> queryFinal = entityManager.createQuery(cq);
-		List<Advert> advertsToMax = query.getResultList();
+		List<Advert> advertsToMax = queryFinal.getResultList();
 		Integer maxPrice = getMaxPrice(advertsToMax);
 		int offset = 0;
 		if (urlParameters.containsKey("offset")) {
@@ -188,6 +184,8 @@ public class SearchService {
 					break;
 			}
 		}
+		predicates.add(cb.greaterThanOrEqualTo(advert.get("propertyRealty").get("totalPrice"), priceFrom));
+		predicates.add(cb.lessThanOrEqualTo(advert.get("propertyRealty").get("totalPrice"), priceTo));
 		predicates.add(cb.equal((advert.get("status")), "IN_USE"));
 		applySort(sortStrategy, cb, advert, cq);
 	}
