@@ -18,7 +18,7 @@ public class AiController {
     }
 
     @PostMapping
-    public PageResponse<FilterSearchResponse> getAiResult(@RequestBody AiRequest request){
+    public PageResponse<FilterSearchResponse> getAiResult(@RequestBody AiRequest request) {
         return aiService.getAdvertByAI(request);
     }
 }

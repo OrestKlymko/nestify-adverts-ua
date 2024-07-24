@@ -27,6 +27,7 @@ C:\GAMO\nestify-main\src\main\java\org\ui\main\advert\repository\SellerRepositor
 C:\GAMO\nestify-main\src\main\java\org\ui\main\advert\service\AdvertService.java
 C:\GAMO\nestify-main\src\main\java\org\ui\main\ai\controller\AiController.java
 C:\GAMO\nestify-main\src\main\java\org\ui\main\ai\dto\AiRequest.java
+C:\GAMO\nestify-main\src\main\java\org\ui\main\ai\dto\AiResponse.java
 C:\GAMO\nestify-main\src\main\java\org\ui\main\ai\service\AiService.java
 C:\GAMO\nestify-main\src\main\java\org\ui\main\config\RestConfig.java
 C:\GAMO\nestify-main\src\main\java\org\ui\main\config\SecurityConfig.java
