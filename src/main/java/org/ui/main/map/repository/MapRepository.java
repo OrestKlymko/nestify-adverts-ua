@@ -32,46 +32,66 @@ public interface MapRepository extends JpaRepository<Advert, Long> {
     List<PointMapResponse> getPointsMap(@Param("ids") List<Long> addressId);
 
     @Query(value = """
-             SELECT adverts.id as advertId,
-                              adverts.description as description,
-                              address.district as district,
-                              address.address_name as address,
-                              address.build_map_tiler as buildIdMapTiler,
-                              address.longitude as longitude,
-                              address.latitude as latitude,
-                              property_building.square as square,
-                              property_building.floor as floor,
-                              property_building.room as room,
-                              property_building.total_price as price,
-                              agency.agency_catalog as agencyCatalog,
-                              adverts.published_at as publishedAt,
-                              (SELECT images.image_url FROM images WHERE images.advert_id = adverts.id LIMIT 1) as advertImage,
-                              ARRAY_AGG(DISTINCT features.feature) as features,
-                              ARRAY_AGG(DISTINCT advantages.advantage) as advantages
-                          FROM adverts
-                          LEFT JOIN address ON adverts.address_id = address.id
-                          LEFT JOIN property_building ON adverts.property_id = property_building.id
-                          LEFT JOIN seller on adverts.seller_id = seller.id
-                          LEFT JOIN agency on seller.agency_id = agency.id
-                          LEFT JOIN property_features pf on property_building.id = pf.property_id
-                          LEFT JOIN features on pf.feature_id = features.id
-                          LEFT JOIN property_advantages pa on property_building.id = pa.property_id
-                          LEFT JOIN advantages on pa.advantage_id = advantages.id
-                          WHERE address.id = :addressId
-                          GROUP BY\s
-                              adverts.id,
-                              adverts.description,
-                              address.district,
-                              address.address_name,
-                              address.build_map_tiler,
-                              address.longitude,
-                              address.latitude,
-                              adverts.published_at,
-                              agency.agency_catalog,
-                              property_building.square,
-                              property_building.floor,
-                              property_building.room,
-                              property_building.total_price
+
+            SELECT
+                                                               adverts.id AS advertId,
+                                                               adverts.description AS description,
+                                                               address.district AS district,
+                                                               address.address_name AS address,
+                                                               address.build_map_tiler AS buildIdMapTiler,
+                                                               address.longitude AS longitude,
+                                                               address.latitude AS latitude,
+                                                               property_building.square AS square,
+                                                               property_building.floor AS floor,
+                                                               property_building.room AS room,
+                                                               property_building.total_price AS price,
+                                                               agency.agency_catalog AS agencyCatalog,
+                                                               adverts.published_at AS publishedAt,
+                                                               img.image_url AS advertImage,
+                                                               ARRAY_AGG(DISTINCT features.feature) AS features,
+                                                               ARRAY_AGG(DISTINCT advantages.advantage) AS advantages
+                                                           FROM
+                                                               adverts
+                                                           LEFT JOIN
+                                                               address ON adverts.address_id = address.id
+                                                           LEFT JOIN
+                                                               property_building ON adverts.property_id = property_building.id
+                                                           LEFT JOIN
+                                                               seller ON adverts.seller_id = seller.id
+                                                           LEFT JOIN
+                                                               agency ON seller.agency_id = agency.id
+                                                           LEFT JOIN
+                                                               property_features pf ON property_building.id = pf.property_id
+                                                           LEFT JOIN
+                                                               features ON pf.feature_id = features.id
+                                                           LEFT JOIN
+                                                               property_advantages pa ON property_building.id = pa.property_id
+                                                           LEFT JOIN
+                                                               advantages ON pa.advantage_id = advantages.id
+                                                           LEFT JOIN LATERAL
+                                                               (SELECT image_url
+                                                                FROM images
+                                                                WHERE images.advert_id = adverts.id
+                                                                ORDER BY images.image_url
+                                                                LIMIT 1) img ON true
+                                                           WHERE
+                                                               address.id = :addressId
+                                                           GROUP BY
+                                                               adverts.id,
+                                                               adverts.description,
+                                                               address.district,
+                                                               address.address_name,
+                                                               address.build_map_tiler,
+                                                               address.longitude,
+                                                               address.latitude,
+                                                               adverts.published_at,
+                                                               agency.agency_catalog,
+                                                               property_building.square,
+                                                               property_building.floor,
+                                                               property_building.room,
+                                                               property_building.total_price,
+                                                               img.image_url;
+                                                           
             """, nativeQuery = true)
     List<MapAdvertsResponse> getAdvertsOnMap(@Param("addressId") Long addressId);
 }
