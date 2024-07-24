@@ -12,8 +12,6 @@ import org.ui.main.advert.model.Features;
 import org.ui.main.search.dto.CoordinateResponse;
 import org.ui.main.search.dto.FilterSearchResponse;
 import org.ui.main.search.dto.PageResponse;
-import org.ui.main.search.dto.PriceRangeStatisticResponse;
-import org.ui.main.search.repository.SearchRepository;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -25,13 +23,9 @@ public class SearchService {
 
 	@PersistenceContext
 	private EntityManager entityManager;
-	private final SearchRepository searchRepository;
 	long priceFrom = 0;
 	long priceTo = Integer.MAX_VALUE;
 
-	public SearchService(SearchRepository searchRepository) {
-		this.searchRepository = searchRepository;
-	}
 
 
 	public PageResponse<FilterSearchResponse> filterSearchForm(Map<String, List<String>> urlParameters) {

@@ -34,7 +34,6 @@ org\ui\main\advert\model\Seller.class
 org\ui\main\ai\controller\AiController.class
 org\ui\main\advert\dto\AddressCreateRequest.class
 org\ui\main\osm\dto\OsmResponse.class
-org\ui\main\search\repository\SearchRepository.class
 org\ui\main\advert\repository\FeatureRepository.class
 org\ui\main\search\dto\PriceRangeStatisticResponse.class
 org\ui\main\search\dto\CoordinateResponse.class
