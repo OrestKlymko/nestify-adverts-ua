@@ -56,6 +56,9 @@ public class SearchService {
 		if (urlParameters.containsKey("offset")) {
 			offset = Integer.parseInt(String.valueOf(urlParameters.get("offset")));
 		}
+		if (urlParameters.containsKey("limit")) {
+			limit = Integer.parseInt(String.valueOf(urlParameters.get("limit")));
+		}
 
 		TypedQuery<Advert> queryFinal = entityManager.createQuery(cq);
 		int total = queryFinal.getResultList().size();
@@ -70,7 +73,7 @@ public class SearchService {
 		List<CoordinateResponse> advertsOnMap = getAdvertsOnMap(advertFinal);
 
 
-		List<FilterSearchResponse> filterSearchResponses = convertToResponse(advertFinal);
+		List<FilterSearchResponse> filterSearchResponses = convertToResponse(queryFinal.getResultList());
 
 		Pageable pageRequest = PageRequest.of(offset / limit, limit);
 		Page<FilterSearchResponse> page = new PageImpl<>(filterSearchResponses, pageRequest, total);
