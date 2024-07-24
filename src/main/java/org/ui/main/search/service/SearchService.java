@@ -45,6 +45,16 @@ public class SearchService {
 
 		applyParameters(urlParameters, predicates, cb, advert, sortStrategy, cq);
 
+		cq.where(predicates.toArray(new Predicate[0]));
+		TypedQuery<Advert> query = entityManager.createQuery(cq);
+		List<Advert> adverts = query.getResultList();
+
+		Map<Integer, Integer> statistic = getStatistic(adverts);
+		Integer maxPrice = getMaxPrice(adverts);
+
+		predicates.add(cb.greaterThanOrEqualTo(advert.get("propertyRealty").get("totalPrice"), priceFrom));
+		predicates.add(cb.lessThanOrEqualTo(advert.get("propertyRealty").get("totalPrice"), priceTo));
+
 
 		cq.where(predicates.toArray(new Predicate[0]));
 
@@ -53,30 +63,20 @@ public class SearchService {
 			offset = Integer.parseInt(String.valueOf(urlParameters.get("offset")));
 		}
 
-		cq.where(predicates.toArray(new Predicate[0]));
-		TypedQuery<Advert> query = entityManager.createQuery(cq);
-		List<Advert> adverts = query.getResultList();
+		TypedQuery<Advert> queryFinal = entityManager.createQuery(cq);
+		int total = queryFinal.getResultList().size();
 
-		Map<Integer, Integer> statistic = getStatistic(adverts);
-		Integer maxPrice = getMaxPrice(adverts);
-
-		query.setFirstResult(offset);
-		query.setMaxResults(limit);
+		queryFinal.setFirstResult(offset);
+		queryFinal.setMaxResults(limit);
 //		for (Map.Entry<Integer, Integer> entry : statistic.entrySet()) {
 //			total += entry.getValue();
 //		}
+		List<Advert> advertFinal = query.getResultList();
 
-		List<Advert> withPriceAdvert = adverts.stream()
-				.filter(advertInFilter ->
-						advertInFilter.getPropertyRealty().getTotalPrice() >= priceFrom &&
-								advertInFilter.getPropertyRealty().getTotalPrice() <= priceTo)
-				.toList();
+		List<CoordinateResponse> advertsOnMap = getAdvertsOnMap(advertFinal);
 
-		List<Advert> resultList = query.getResultList();
-		List<CoordinateResponse> advertsOnMap = getAdvertsOnMap(withPriceAdvert);
-		int total = resultList.size();
 
-		List<FilterSearchResponse> filterSearchResponses = convertToResponse(withPriceAdvert);
+		List<FilterSearchResponse> filterSearchResponses = convertToResponse(advertFinal);
 
 		Pageable pageRequest = PageRequest.of(offset / limit, limit);
 		Page<FilterSearchResponse> page = new PageImpl<>(filterSearchResponses, pageRequest, total);
