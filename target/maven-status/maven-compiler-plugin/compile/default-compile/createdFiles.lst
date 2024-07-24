@@ -1,4 +1,5 @@
 org\ui\main\advert\dto\PropertyCreateRequest.class
+org\ui\main\ai\dto\AiResponse.class
 org\ui\main\osm\dto\LocationInfoResponse.class
 org\ui\main\advert\model\enums\Status.class
 org\ui\main\advert\model\Advert.class
