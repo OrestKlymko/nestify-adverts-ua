@@ -178,7 +178,7 @@ public class SearchService {
 					predicates.add(cb.equal((advert.get("typeRealty")), decodedValue));
 					break;
 				case "agency":
-					predicates.add(cb.equal((advert.get("seller").get("agencyName")), decodedValue));
+					predicates.add(cb.equal((advert.get("seller").get("agency").get("agencyName")), decodedValue));
 					break;
 				case "sort":
 					sortStrategy = decodedValue;
