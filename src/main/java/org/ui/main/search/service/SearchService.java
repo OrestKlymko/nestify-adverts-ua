@@ -65,15 +65,13 @@ public class SearchService {
 
 		queryFinal.setFirstResult(offset);
 		queryFinal.setMaxResults(limit);
-//		for (Map.Entry<Integer, Integer> entry : statistic.entrySet()) {
-//			total += entry.getValue();
-//		}
-		List<Advert> advertFinal = query.getResultList();
 
+
+		List<Advert> advertFinal = queryFinal.getResultList();
 		List<CoordinateResponse> advertsOnMap = getAdvertsOnMap(advertFinal);
 
 
-		List<FilterSearchResponse> filterSearchResponses = convertToResponse(queryFinal.getResultList());
+		List<FilterSearchResponse> filterSearchResponses = convertToResponse(advertFinal);
 
 		Pageable pageRequest = PageRequest.of(offset / limit, limit);
 		Page<FilterSearchResponse> page = new PageImpl<>(filterSearchResponses, pageRequest, total);
