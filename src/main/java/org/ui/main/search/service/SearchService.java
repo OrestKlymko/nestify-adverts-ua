@@ -52,6 +52,13 @@ public class SearchService {
 
 		cq.where(predicates.toArray(new Predicate[0]));
 
+
+
+		TypedQuery<Advert> queryFinal = entityManager.createQuery(cq);
+		List<Advert> total = queryFinal.getResultList();
+		List<CoordinateResponse> advertsOnMap = getAdvertsOnMap(total);
+
+
 		int offset = 0;
 		if (urlParameters.containsKey("offset")) {
 			offset = Integer.parseInt(String.valueOf(urlParameters.get("offset")));
@@ -60,21 +67,17 @@ public class SearchService {
 			limit = Integer.parseInt(String.valueOf(urlParameters.get("limit")));
 		}
 
-		TypedQuery<Advert> queryFinal = entityManager.createQuery(cq);
-		int total = queryFinal.getResultList().size();
-
 		queryFinal.setFirstResult(offset);
 		queryFinal.setMaxResults(limit);
 
 
 		List<Advert> advertFinal = queryFinal.getResultList();
-		List<CoordinateResponse> advertsOnMap = getAdvertsOnMap(advertFinal);
 
 
 		List<FilterSearchResponse> filterSearchResponses = convertToResponse(advertFinal);
 
 		Pageable pageRequest = PageRequest.of(offset / limit, limit);
-		Page<FilterSearchResponse> page = new PageImpl<>(filterSearchResponses, pageRequest, total);
+		Page<FilterSearchResponse> page = new PageImpl<>(filterSearchResponses, pageRequest, total.size());
 
 		return new PageResponse<>(page, sortStrategy, maxPrice, statistic, advertsOnMap);
 	}
