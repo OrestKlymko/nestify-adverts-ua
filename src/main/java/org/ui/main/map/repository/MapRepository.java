@@ -16,19 +16,20 @@ public interface MapRepository extends JpaRepository<Advert, Long> {
 
     @Query(value = """
             SELECT address.id as addressHouseId,
-                   address.build_map_tiler as buildIdMapTiler,
-                   address.longitude as longitude,
-                   address.latitude as latitude,
-                   (SELECT MIN(property_building.total_price)
-                    FROM property_building
-                   LEFT JOIN adverts ON property_building.id = adverts.property_id
-                    WHERE adverts.address_id = address.id) as lowerPrice
-            FROM address
-            WHERE address.id IN (:ids)
-            GROUP BY address.id,
-                     address.build_map_tiler,
-                     address.longitude,
-                     address.latitude""", nativeQuery = true)
+                                                        address.build_map_tiler as buildIdMapTiler,
+                                                        address.longitude as longitude,
+                                                        address.latitude as latitude,
+                                                        (SELECT MIN(property_building.total_price)
+                                                         FROM property_building
+                                                         JOIN adverts ON property_building.id = adverts.property_id
+                                                         WHERE adverts.address_id = address.id) as lowerPrice
+                                                 FROM adverts
+                                                 LEFT JOIN address ON adverts.address_id = address.id
+                                                 WHERE adverts.id IN (:ids)
+                                                 GROUP BY address.id,
+                                                          address.build_map_tiler,
+                                                          address.longitude,
+                                                          address.latitude""", nativeQuery = true)
     List<PointMapResponse> getPointsMap(@Param("ids") List<Long> addressId);
 
     @Query(value = """
