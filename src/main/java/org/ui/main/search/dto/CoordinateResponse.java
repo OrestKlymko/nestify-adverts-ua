@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record CoordinateResponse(
-        @JsonProperty("advertId")
-        Long advertId,
+        @JsonProperty("id")
+        Long id,
         @JsonProperty("longitude")
         double longitude,
         @JsonProperty("latitude")

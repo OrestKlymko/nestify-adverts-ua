@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface MapAdvertsResponse {
-    Long getAdvertId();
+    Long getId();
     String getDescription();
     String getDistrict();
     String getAddress();

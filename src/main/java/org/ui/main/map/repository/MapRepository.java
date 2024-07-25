@@ -35,7 +35,7 @@ public interface MapRepository extends JpaRepository<Advert, Long> {
     @Query(value = """
 
             SELECT
-                                                               adverts.id AS advertId,
+                                                               adverts.id AS id,
                                                                adverts.description AS description,
                                                                address.district AS district,
                                                                address.address_name AS address,
