@@ -23,13 +23,18 @@ public class SearchService {
 
 	@PersistenceContext
 	private EntityManager entityManager;
-	long priceFrom = 0;
-	long priceTo = Integer.MAX_VALUE;
+
 
 
 
 	public PageResponse<FilterSearchResponse> filterSearchForm(Map<String, List<String>> urlParameters) {
 		int limit = 12;
+		long priceFrom = 0;
+		long priceTo = Integer.MAX_VALUE;
+
+
+
+
 		String sortStrategy = "newest";
 
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -45,6 +50,13 @@ public class SearchService {
 
 		Map<Integer, Integer> statistic = getStatistic(adverts);
 		Integer maxPrice = getMaxPrice(adverts);
+
+		if (urlParameters.containsKey("priceFrom")) {
+			priceFrom = Integer.parseInt(String.valueOf(urlParameters.get("priceFrom")));
+		}
+		if (urlParameters.containsKey("priceTo")) {
+			priceTo = Integer.parseInt(String.valueOf(urlParameters.get("priceTo")));
+		}
 
 		predicates.add(cb.greaterThanOrEqualTo(advert.get("propertyRealty").get("totalPrice"), priceFrom));
 		predicates.add(cb.lessThanOrEqualTo(advert.get("propertyRealty").get("totalPrice"), priceTo));
@@ -160,12 +172,6 @@ public class SearchService {
 				case "districts":
 					String[] splitDistrict = decodedValue.split(",");
 					predicates.add(advert.get("address").get("district").in(splitDistrict));
-					break;
-				case "priceFrom":
-					priceFrom = Integer.parseInt(decodedValue);
-					break;
-				case "priceTo":
-					priceTo = Integer.parseInt(decodedValue);
 					break;
 				case "typeOwner":
 					List<String> typeOwners = Arrays.asList(decodedValue.split(","));
