@@ -170,7 +170,8 @@ public class SearchService {
 					predicates.add(advert.get("id").in(subquery));
 					break;
 				case "districts":
-					String[] splitDistrict = decodedValue.split(",");
+					List<String> splitDistrict = Arrays.stream(decodedValue.split(","))
+							.collect(Collectors.toList());
 					predicates.add(advert.get("address").get("district").in(splitDistrict));
 					break;
 				case "typeOwner":
