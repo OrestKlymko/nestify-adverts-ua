@@ -169,7 +169,7 @@ public class SearchService {
 							.having(cb.equal(cb.countDistinct(subFeaturesJoin.get("featureName")), features.size()));
 					predicates.add(advert.get("id").in(subquery));
 					break;
-				case "districts":
+				case "district":
 					List<String> splitDistrict = Arrays.stream(decodedValue.split(","))
 							.collect(Collectors.toList());
 					predicates.add(advert.get("address").get("district").in(splitDistrict));
