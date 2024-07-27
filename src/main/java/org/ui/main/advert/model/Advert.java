@@ -3,8 +3,11 @@ package org.ui.main.advert.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import org.ui.main.advert.model.address.Address;
 import org.ui.main.advert.model.enums.Status;
 import org.ui.main.advert.model.enums.TypeRealty;
+import org.ui.main.advert.model.property.PropertyRealty;
+import org.ui.main.advert.model.seller.Seller;
 
 import java.time.LocalDateTime;
 import java.util.Objects;

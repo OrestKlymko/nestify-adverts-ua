@@ -2,14 +2,30 @@ package org.ui.main.advert.service;
 
 
 import org.springframework.stereotype.Service;
+import org.ui.main.advert.dto.AddressCreateRequest;
 import org.ui.main.advert.dto.CreateAdvertRequest;
 import org.ui.main.advert.dto.FinalPageResponse;
 import org.ui.main.advert.model.*;
+import org.ui.main.advert.model.address.Address;
+import org.ui.main.advert.model.address.City;
+import org.ui.main.advert.model.address.District;
+import org.ui.main.advert.model.address.Street;
 import org.ui.main.advert.model.enums.Advantage;
 import org.ui.main.advert.model.enums.ApartmentFeature;
 import org.ui.main.advert.model.enums.Status;
 import org.ui.main.advert.model.enums.TypeOwner;
+import org.ui.main.advert.model.property.Advantages;
+import org.ui.main.advert.model.property.Features;
+import org.ui.main.advert.model.property.PropertyRealty;
+import org.ui.main.advert.model.seller.Agency;
+import org.ui.main.advert.model.seller.Seller;
 import org.ui.main.advert.repository.*;
+import org.ui.main.advert.repository.address.AddressRepository;
+import org.ui.main.advert.repository.property.AdvantageRepository;
+import org.ui.main.advert.repository.property.FeatureRepository;
+import org.ui.main.advert.repository.property.PropertyRealtyRepository;
+import org.ui.main.advert.repository.seller.AgencyRepository;
+import org.ui.main.advert.repository.seller.SellerRepository;
 import org.ui.main.exceptions.NotFondException;
 
 import java.time.LocalDateTime;
@@ -23,16 +39,17 @@ public class AdvertService {
     private final AdvertRepository advertRepository;
     private final AdvantageRepository advantageRepository;
     private final FeatureRepository featureRepository;
-    private final AddressRepository addressRepository;
+    private final AddressService addressService;
     private final SellerRepository sellerRepository;
     private final AgencyRepository agencyRepository;
     private final PropertyRealtyRepository propertyRealtyRepository;
 
-    public AdvertService(AdvertRepository advertRepository, AdvantageRepository advantageRepository, FeatureRepository featureRepository, AddressRepository addressRepository, SellerRepository sellerRepository, AgencyRepository agencyRepository, PropertyRealtyRepository propertyRealtyRepository) {
+
+    public AdvertService(AdvertRepository advertRepository, AdvantageRepository advantageRepository, FeatureRepository featureRepository, AddressService addressService, SellerRepository sellerRepository, AgencyRepository agencyRepository, PropertyRealtyRepository propertyRealtyRepository) {
         this.advertRepository = advertRepository;
         this.advantageRepository = advantageRepository;
         this.featureRepository = featureRepository;
-        this.addressRepository = addressRepository;
+        this.addressService = addressService;
         this.sellerRepository = sellerRepository;
         this.agencyRepository = agencyRepository;
         this.propertyRealtyRepository = propertyRealtyRepository;
@@ -43,7 +60,6 @@ public class AdvertService {
         return advertRepository.getAdvertById(id)
                 .orElseThrow(() -> new NotFondException(String.format("Advert with id %s not found", id)));
     }
-
 
 
     public void createAdvert(CreateAdvertRequest request) {
@@ -60,7 +76,7 @@ public class AdvertService {
         advert.setFinalUrl(request.finalUrl());
         advert.setStatus(Status.IN_USE);
         advert.setTypeRealty(request.typeRealty());
-        advert.setAddress(getAddress(request));
+        advert.setAddress(addressService.createAddress(request.address()));
         advert.setPropertyRealty(getProperty(request));
         advert.setSeller(getSeller(request));
         return advert;
@@ -92,27 +108,6 @@ public class AdvertService {
         return sellerRepository.save(seller);
     }
 
-    private Address getAddress(CreateAdvertRequest request) {
-        Address address = new Address();
-
-        Optional<Address> addressInDb = addressRepository.findAddressByAddressNameAndDistrictAndCity(
-                request.address().addressName(),
-                request.address().district(),
-                request.address().city());
-
-        if (addressInDb.isPresent()) {
-            return addressInDb.get();
-        }
-
-        address.setAddressName(request.address().addressName());
-        address.setCity(request.address().city());
-        address.setDistrict(request.address().district());
-        address.setLatitude(request.address().latitude());
-        address.setLongitude(request.address().longitude());
-        address.setBuildIdMapTiler(request.address().buildIdMapTiler());
-
-        return addressRepository.save(address);
-    }
 
     private PropertyRealty getProperty(CreateAdvertRequest request) {
         PropertyRealty propertyRealty = new PropertyRealty();
