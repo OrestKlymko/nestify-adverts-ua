@@ -3,6 +3,8 @@ package org.ui.main.advert.service;
 
 import org.springframework.stereotype.Service;
 import org.ui.main.advert.dto.AddressCreateRequest;
+import org.ui.main.advert.dto.AllLocationDto;
+import org.ui.main.advert.dto.AllLocationResponse;
 import org.ui.main.advert.model.address.Address;
 import org.ui.main.advert.model.address.City;
 import org.ui.main.advert.model.address.District;
@@ -12,7 +14,8 @@ import org.ui.main.advert.repository.address.CityRepository;
 import org.ui.main.advert.repository.address.DistrictRepository;
 import org.ui.main.advert.repository.address.StreetRepository;
 
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class AddressService {
@@ -27,6 +30,37 @@ public class AddressService {
         this.districtRepository = districtRepository;
         this.streetRepository = streetRepository;
     }
+
+
+    public List<AllLocationResponse> getAllLocation() {
+        AtomicInteger id = new AtomicInteger();
+        List<AllLocationDto> allLocation = addressRepository.getAllLocation();
+
+        List<AllLocationResponse> locationResponses = new ArrayList<>();
+
+        Set<String> cities = new HashSet<>();
+        Map<String, String> districts = new HashMap<>();
+
+        allLocation.forEach(location -> {
+            locationResponses.add(new AllLocationResponse(id.get(), location.getCity(), location.getDistrict(), location.getStreet()));
+            id.getAndIncrement();
+            cities.add(location.getCity());
+            districts.put(location.getDistrict(), location.getCity());
+        });
+
+        cities.forEach(city -> {
+            locationResponses.add(new AllLocationResponse(id.get(),city, "", ""));
+            id.getAndIncrement();
+        });
+
+        districts.forEach((district, city) -> {
+            locationResponses.add(new AllLocationResponse(id.get(),city, district, ""));
+            id.getAndIncrement();
+        });
+
+        return locationResponses;
+    }
+
 
     public Address createAddress(AddressCreateRequest request) {
         City city = getCity(request.city());
@@ -46,7 +80,7 @@ public class AddressService {
     }
 
     private Street getStreet(String streetName, Integer numberHouse, String city, String districtName) {
-        Optional<Street> street = streetRepository.findStreet(streetName, numberHouse,districtName,city);
+        Optional<Street> street = streetRepository.findStreet(streetName, numberHouse, districtName, city);
         if (street.isPresent()) return street.get();
         District district = getDistrict(districtName, city);
         Street streetToSave = new Street();

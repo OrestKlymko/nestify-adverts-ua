@@ -1,7 +1,9 @@
+org\ui\main\advert\dto\AllLocationDto.class
 org\ui\main\advert\dto\PropertyCreateRequest.class
 org\ui\main\ai\dto\AiResponse.class
 org\ui\main\osm\dto\LocationInfoResponse.class
 org\ui\main\advert\model\enums\Status.class
+org\ui\main\advert\controller\AddressController.class
 org\ui\main\advert\repository\address\DistrictRepository.class
 org\ui\main\advert\model\Advert.class
 org\ui\main\map\repository\MapRepository.class
@@ -34,6 +36,7 @@ org\ui\main\advert\model\seller\Seller.class
 org\ui\main\advert\repository\address\AddressRepository.class
 org\ui\main\exceptions\NotFondException.class
 org\ui\main\advert\model\enums\AllowedStatus.class
+org\ui\main\advert\dto\AllLocationResponse.class
 org\ui\main\advert\model\property\Features.class
 org\ui\main\advert\model\address\Street.class
 org\ui\main\ai\controller\AiController.class

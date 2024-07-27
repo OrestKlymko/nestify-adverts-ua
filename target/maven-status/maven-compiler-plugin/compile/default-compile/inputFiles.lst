@@ -1,5 +1,8 @@
+C:\GAMO\nestify-main\src\main\java\org\ui\main\advert\controller\AddressController.java
 C:\GAMO\nestify-main\src\main\java\org\ui\main\advert\controller\AdvertController.java
 C:\GAMO\nestify-main\src\main\java\org\ui\main\advert\dto\AddressCreateRequest.java
+C:\GAMO\nestify-main\src\main\java\org\ui\main\advert\dto\AllLocationDto.java
+C:\GAMO\nestify-main\src\main\java\org\ui\main\advert\dto\AllLocationResponse.java
 C:\GAMO\nestify-main\src\main\java\org\ui\main\advert\dto\CreateAdvertRequest.java
 C:\GAMO\nestify-main\src\main\java\org\ui\main\advert\dto\FinalPageResponse.java
 C:\GAMO\nestify-main\src\main\java\org\ui\main\advert\dto\PropertyCreateRequest.java
