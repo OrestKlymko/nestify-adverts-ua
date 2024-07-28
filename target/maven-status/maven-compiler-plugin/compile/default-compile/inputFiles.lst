@@ -53,6 +53,10 @@ C:\GAMO\nestify-main\src\main\java\org\ui\main\map\service\MapService.java
 C:\GAMO\nestify-main\src\main\java\org\ui\main\osm\dto\LocationInfoResponse.java
 C:\GAMO\nestify-main\src\main\java\org\ui\main\osm\dto\OsmResponse.java
 C:\GAMO\nestify-main\src\main\java\org\ui\main\osm\service\OsmService.java
+C:\GAMO\nestify-main\src\main\java\org\ui\main\review\controller\ReviewController.java
+C:\GAMO\nestify-main\src\main\java\org\ui\main\review\model\Review.java
+C:\GAMO\nestify-main\src\main\java\org\ui\main\review\repository\ReviewRepository.java
+C:\GAMO\nestify-main\src\main\java\org\ui\main\review\service\ReviewService.java
 C:\GAMO\nestify-main\src\main\java\org\ui\main\search\controller\SearchController.java
 C:\GAMO\nestify-main\src\main\java\org\ui\main\search\dto\CoordinateResponse.java
 C:\GAMO\nestify-main\src\main\java\org\ui\main\search\dto\FilterSearchResponse.java

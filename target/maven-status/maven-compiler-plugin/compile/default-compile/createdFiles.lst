@@ -9,7 +9,9 @@ org\ui\main\advert\model\Advert.class
 org\ui\main\map\repository\MapRepository.class
 org\ui\main\advert\model\enums\ApartmentFeature.class
 org\ui\main\advert\repository\seller\AgencyRepository.class
+org\ui\main\review\service\ReviewService.class
 org\ui\main\advert\model\enums\TypeOwner.class
+org\ui\main\review\controller\ReviewController.class
 org\ui\main\advert\repository\address\DistrictPartRepository.class
 org\ui\main\search\service\SearchService.class
 org\ui\main\map\contoller\MapController.class
@@ -39,6 +41,7 @@ org\ui\main\advert\model\enums\AllowedStatus.class
 org\ui\main\advert\dto\AllLocationResponse.class
 org\ui\main\advert\model\property\Features.class
 org\ui\main\advert\model\address\Street.class
+org\ui\main\review\repository\ReviewRepository.class
 org\ui\main\ai\controller\AiController.class
 org\ui\main\advert\model\seller\Agency.class
 org\ui\main\advert\model\property\Advantages.class
@@ -50,6 +53,7 @@ org\ui\main\search\dto\CoordinateResponse.class
 org\ui\main\advert\repository\property\PropertyRealtyRepository.class
 org\ui\main\MainApplication.class
 org\ui\main\advert\repository\property\AdvantageRepository.class
+org\ui\main\review\model\Review.class
 org\ui\main\advert\service\AdvertService.class
 org\ui\main\advert\repository\AdvertRepository.class
 org\ui\main\advert\model\address\City.class
