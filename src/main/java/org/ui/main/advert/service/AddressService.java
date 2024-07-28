@@ -42,8 +42,6 @@ public class AddressService {
         Map<String, String> districts = new HashMap<>();
 
         allLocation.forEach(location -> {
-            locationResponses.add(new AllLocationResponse(id.get(), location.getCity(), location.getDistrict(), location.getStreet()));
-            id.getAndIncrement();
             cities.add(location.getCity());
             districts.put(location.getDistrict(), location.getCity());
         });
@@ -55,6 +53,11 @@ public class AddressService {
 
         districts.forEach((district, city) -> {
             locationResponses.add(new AllLocationResponse(id.get(),city, district, ""));
+            id.getAndIncrement();
+        });
+
+        allLocation.forEach(location->{
+            locationResponses.add(new AllLocationResponse(id.get(), location.getCity(), location.getDistrict(), location.getStreet()));
             id.getAndIncrement();
         });
 
