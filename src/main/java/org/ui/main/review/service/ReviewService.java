@@ -37,5 +37,6 @@ public class ReviewService {
         });
         MailStructure mailStructure = new MailStructure("Підозріле оголошення", builder.toString());
         mailService.sendMail("orest.klymko2020@gmail.com", mailStructure);
+        mailService.sendMail("kossdemm@gmail.com", mailStructure);
     }
 }
