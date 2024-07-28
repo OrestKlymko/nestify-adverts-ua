@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.ui.main.review.dto.ReviewOnAdvertResponse;
 import org.ui.main.review.model.Review;
@@ -28,5 +29,5 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
                                             GROUP BY reviews.name, advert_id
                                             HAVING count(reviews.id) >= 3
             """, nativeQuery = true)
-    public List<ReviewOnAdvertResponse> getReviewsOnAdvert();
+    public List<ReviewOnAdvertResponse> getReviewsOnAdvert(@Param("advertId") Long advertId);
 }

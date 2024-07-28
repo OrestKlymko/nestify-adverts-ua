@@ -22,7 +22,7 @@ public class ReviewService {
 
     public void createReviewOnAdvert(Long advertId, Long reviewId) {
         reviewRepository.insertReviewOnAdvert(advertId, reviewId);
-        List<ReviewOnAdvertResponse> reviewsOnAdvert = reviewRepository.getReviewsOnAdvert();
+        List<ReviewOnAdvertResponse> reviewsOnAdvert = reviewRepository.getReviewsOnAdvert(advertId);
         if (!reviewsOnAdvert.isEmpty()) {
             sendAlertMessage(reviewsOnAdvert);
         }
