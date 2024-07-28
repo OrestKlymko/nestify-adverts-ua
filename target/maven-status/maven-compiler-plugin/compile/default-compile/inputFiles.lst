@@ -44,6 +44,8 @@ C:\GAMO\nestify-main\src\main\java\org\ui\main\ai\service\AiService.java
 C:\GAMO\nestify-main\src\main\java\org\ui\main\config\RestConfig.java
 C:\GAMO\nestify-main\src\main\java\org\ui\main\config\SecurityConfig.java
 C:\GAMO\nestify-main\src\main\java\org\ui\main\exceptions\NotFondException.java
+C:\GAMO\nestify-main\src\main\java\org\ui\main\mail\dto\MailStructure.java
+C:\GAMO\nestify-main\src\main\java\org\ui\main\mail\service\MailService.java
 C:\GAMO\nestify-main\src\main\java\org\ui\main\MainApplication.java
 C:\GAMO\nestify-main\src\main\java\org\ui\main\map\contoller\MapController.java
 C:\GAMO\nestify-main\src\main\java\org\ui\main\map\dto\MapAdvertsResponse.java
@@ -54,6 +56,7 @@ C:\GAMO\nestify-main\src\main\java\org\ui\main\osm\dto\LocationInfoResponse.java
 C:\GAMO\nestify-main\src\main\java\org\ui\main\osm\dto\OsmResponse.java
 C:\GAMO\nestify-main\src\main\java\org\ui\main\osm\service\OsmService.java
 C:\GAMO\nestify-main\src\main\java\org\ui\main\review\controller\ReviewController.java
+C:\GAMO\nestify-main\src\main\java\org\ui\main\review\dto\ReviewOnAdvertResponse.java
 C:\GAMO\nestify-main\src\main\java\org\ui\main\review\model\Review.java
 C:\GAMO\nestify-main\src\main\java\org\ui\main\review\repository\ReviewRepository.java
 C:\GAMO\nestify-main\src\main\java\org\ui\main\review\service\ReviewService.java

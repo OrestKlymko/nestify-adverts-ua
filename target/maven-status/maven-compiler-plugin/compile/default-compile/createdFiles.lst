@@ -8,6 +8,7 @@ org\ui\main\advert\repository\address\DistrictRepository.class
 org\ui\main\advert\model\Advert.class
 org\ui\main\map\repository\MapRepository.class
 org\ui\main\advert\model\enums\ApartmentFeature.class
+org\ui\main\mail\service\MailService.class
 org\ui\main\advert\repository\seller\AgencyRepository.class
 org\ui\main\review\service\ReviewService.class
 org\ui\main\advert\model\enums\TypeOwner.class
@@ -15,6 +16,7 @@ org\ui\main\review\controller\ReviewController.class
 org\ui\main\advert\repository\address\DistrictPartRepository.class
 org\ui\main\search\service\SearchService.class
 org\ui\main\map\contoller\MapController.class
+org\ui\main\mail\dto\MailStructure.class
 org\ui\main\map\dto\PointMapResponse.class
 org\ui\main\map\service\MapService.class
 org\ui\main\advert\repository\address\CityRepository.class
@@ -35,6 +37,7 @@ org\ui\main\advert\model\address\DistrictPart.class
 org\ui\main\advert\dto\CreateAdvertRequest.class
 org\ui\main\advert\dto\FinalPageResponse.class
 org\ui\main\advert\model\seller\Seller.class
+org\ui\main\review\dto\ReviewOnAdvertResponse.class
 org\ui\main\advert\repository\address\AddressRepository.class
 org\ui\main\exceptions\NotFondException.class
 org\ui\main\advert\model\enums\AllowedStatus.class
