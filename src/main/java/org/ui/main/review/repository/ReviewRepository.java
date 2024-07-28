@@ -19,9 +19,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     void insertReviewOnAdvert(Long advertId, Long reviewId);
 
     @Query(value = """
-
             SELECT reviews.name      as reviewName,
-                    count(reviews.id) as countReview
+                    count(reviews.id) as countReview,
                     reviews_adverts.advert_id as advertId
             FROM reviews_adverts
             JOIN reviews ON reviews_adverts.review_id = reviews.id
