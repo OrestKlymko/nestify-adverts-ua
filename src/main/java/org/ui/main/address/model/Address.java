@@ -1,15 +1,9 @@
-package org.ui.main.advert.model.address;
+package org.ui.main.address.model;
 
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.ui.main.advert.model.Advert;
-
-import java.util.Objects;
-import java.util.Set;
-
-import jakarta.persistence.*;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.Set;
 

@@ -3,7 +3,7 @@ package org.ui.main.advert.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import org.ui.main.advert.model.address.Address;
+import org.ui.main.address.model.Address;
 import org.ui.main.advert.model.enums.Status;
 import org.ui.main.advert.model.enums.TypeRealty;
 import org.ui.main.advert.model.property.PropertyRealty;

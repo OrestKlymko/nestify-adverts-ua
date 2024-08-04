@@ -1,4 +1,4 @@
-package org.ui.main.advert.model.address;
+package org.ui.main.address.model;
 
 
 import jakarta.persistence.*;

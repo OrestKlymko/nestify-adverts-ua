@@ -1,4 +1,4 @@
-package org.ui.main.advert.dto;
+package org.ui.main.address.dto;
 
 public interface AllLocationDto {
     String getCity();

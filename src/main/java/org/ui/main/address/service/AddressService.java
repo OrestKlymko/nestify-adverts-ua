@@ -1,18 +1,18 @@
-package org.ui.main.advert.service;
+package org.ui.main.address.service;
 
 
 import org.springframework.stereotype.Service;
-import org.ui.main.advert.dto.AddressCreateRequest;
-import org.ui.main.advert.dto.AllLocationDto;
-import org.ui.main.advert.dto.AllLocationResponse;
-import org.ui.main.advert.model.address.Address;
-import org.ui.main.advert.model.address.City;
-import org.ui.main.advert.model.address.District;
-import org.ui.main.advert.model.address.Street;
-import org.ui.main.advert.repository.address.AddressRepository;
-import org.ui.main.advert.repository.address.CityRepository;
-import org.ui.main.advert.repository.address.DistrictRepository;
-import org.ui.main.advert.repository.address.StreetRepository;
+import org.ui.main.address.dto.AddressCreateRequest;
+import org.ui.main.address.dto.AllLocationDto;
+import org.ui.main.address.dto.AllLocationResponse;
+import org.ui.main.address.model.Address;
+import org.ui.main.address.model.City;
+import org.ui.main.address.model.District;
+import org.ui.main.address.model.Street;
+import org.ui.main.address.repository.AddressRepository;
+import org.ui.main.address.repository.CityRepository;
+import org.ui.main.address.repository.DistrictRepository;
+import org.ui.main.address.repository.StreetRepository;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;

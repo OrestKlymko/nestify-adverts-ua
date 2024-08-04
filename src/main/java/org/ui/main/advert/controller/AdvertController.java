@@ -3,7 +3,7 @@ package org.ui.main.advert.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.ui.main.advert.dto.CreateAdvertRequest;
+import org.ui.main.address.dto.CreateAdvertRequest;
 import org.ui.main.advert.service.AdvertService;
 import org.ui.main.advert.dto.FinalPageResponse;
 import org.ui.main.exceptions.NotFondException;

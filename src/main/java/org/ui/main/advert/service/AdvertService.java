@@ -2,14 +2,10 @@ package org.ui.main.advert.service;
 
 
 import org.springframework.stereotype.Service;
-import org.ui.main.advert.dto.AddressCreateRequest;
-import org.ui.main.advert.dto.CreateAdvertRequest;
+import org.ui.main.address.dto.CreateAdvertRequest;
+import org.ui.main.address.service.AddressService;
 import org.ui.main.advert.dto.FinalPageResponse;
 import org.ui.main.advert.model.*;
-import org.ui.main.advert.model.address.Address;
-import org.ui.main.advert.model.address.City;
-import org.ui.main.advert.model.address.District;
-import org.ui.main.advert.model.address.Street;
 import org.ui.main.advert.model.enums.Advantage;
 import org.ui.main.advert.model.enums.ApartmentFeature;
 import org.ui.main.advert.model.enums.Status;
@@ -20,7 +16,6 @@ import org.ui.main.advert.model.property.PropertyRealty;
 import org.ui.main.advert.model.seller.Agency;
 import org.ui.main.advert.model.seller.Seller;
 import org.ui.main.advert.repository.*;
-import org.ui.main.advert.repository.address.AddressRepository;
 import org.ui.main.advert.repository.property.AdvantageRepository;
 import org.ui.main.advert.repository.property.FeatureRepository;
 import org.ui.main.advert.repository.property.PropertyRealtyRepository;
