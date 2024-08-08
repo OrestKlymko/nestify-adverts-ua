@@ -2,6 +2,7 @@ package org.ui.main.advert.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.ui.main.address.dto.CreateAdvertRequest;
 import org.ui.main.advert.service.AdvertService;
@@ -20,6 +21,11 @@ public class AdvertController {
     @GetMapping("/{id}")
     public ResponseEntity<FinalPageResponse> getAdvert(@PathVariable Long id) throws NotFondException {
             return ResponseEntity.ok(advertService.findAdvertById(id));
+    }
+
+    @GetMapping("/ok")
+    public String test(){
+        return "OK";
     }
 
     @PostMapping
