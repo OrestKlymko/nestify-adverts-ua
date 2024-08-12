@@ -31,7 +31,6 @@ org\ui\main\ai\service\AiService.class
 org\ui\main\advert\model\property\PropertyRealty.class
 org\ui\main\advert\repository\seller\SellerRepository.class
 org\ui\main\advert\model\enums\TypeRealty.class
-org\ui\main\config\SecurityConfig.class
 org\ui\main\address\repository\DistrictRepository.class
 org\ui\main\address\repository\StreetRepository.class
 org\ui\main\advert\dto\FinalPageResponse.class

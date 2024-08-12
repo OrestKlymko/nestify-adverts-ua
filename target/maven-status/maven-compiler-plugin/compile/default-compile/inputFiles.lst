@@ -42,7 +42,6 @@ C:\nesti\nestify-main\src\main\java\org\ui\main\ai\dto\AiRequest.java
 C:\nesti\nestify-main\src\main\java\org\ui\main\ai\dto\AiResponse.java
 C:\nesti\nestify-main\src\main\java\org\ui\main\ai\service\AiService.java
 C:\nesti\nestify-main\src\main\java\org\ui\main\config\RestConfig.java
-C:\nesti\nestify-main\src\main\java\org\ui\main\config\SecurityConfig.java
 C:\nesti\nestify-main\src\main\java\org\ui\main\exceptions\NotFondException.java
 C:\nesti\nestify-main\src\main\java\org\ui\main\mail\dto\MailStructure.java
 C:\nesti\nestify-main\src\main\java\org\ui\main\mail\service\MailService.java
