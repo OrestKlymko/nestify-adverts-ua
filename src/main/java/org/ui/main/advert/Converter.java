@@ -42,6 +42,7 @@ public class Converter {
         propertyRealty.setEnergyPrice(request.property().energyPrice());
         propertyRealty.setTotalPrice(request.property().totalPrice());
         propertyRealty.setWithKids(request.property().withKids());
+        propertyRealty.setMaxPeople(request.property().maxPerson());
         propertyRealty.setWithPets(request.property().withPets());
         propertyRealty.setAdvantageList(advantagesFromTable);
         propertyRealty.setFeatures(featuresFromTable);

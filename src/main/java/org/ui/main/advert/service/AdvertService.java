@@ -63,15 +63,14 @@ public class AdvertService {
     public void createAdvert(CreateAdvertRequest request) {
         Advert advert = getAdvert(request);
         Advert savedAdvert = advertRepository.save(advert);
-
-        AdminResponse completed = new AdminResponse(
-                savedAdvert.getId(),
-                request.idApplication(),
-                savedAdvert.getFinalUrl(),
-                "COMPLETED");
-
-        restTemplate.postForEntity("https://localhost:9190/api/status", completed, AdminResponse.class);
-
+        if(request.idApplication()!=null) {
+            AdminResponse completed = new AdminResponse(
+                    savedAdvert.getId(),
+                    request.idApplication(),
+                    savedAdvert.getFinalUrl(),
+                    "COMPLETED");
+            restTemplate.postForEntity("https://localhost:9190/api/status", completed, AdminResponse.class);
+        }
     }
 
     private Advert getAdvert(CreateAdvertRequest request) {

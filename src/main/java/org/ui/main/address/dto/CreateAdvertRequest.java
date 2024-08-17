@@ -1,7 +1,6 @@
 package org.ui.main.address.dto;
 
 import org.ui.main.advert.dto.PropertyCreateRequest;
-import org.ui.main.advert.dto.SellerCreateRequest;
 import org.ui.main.advert.model.enums.TypeRealty;
 
 import java.io.File;
@@ -16,6 +15,5 @@ public record CreateAdvertRequest(
         Set<File> images,
         PropertyCreateRequest property,
         AddressCreateRequest address
-
 ) {
 }

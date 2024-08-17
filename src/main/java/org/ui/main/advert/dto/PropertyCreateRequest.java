@@ -12,6 +12,7 @@ public record PropertyCreateRequest(
         int room,
         int realtyPrice,
         int energyPrice,
+        int maxPerson,
         int totalPrice,
         Set<ApartmentFeature> features,
         AllowedStatus withPets,

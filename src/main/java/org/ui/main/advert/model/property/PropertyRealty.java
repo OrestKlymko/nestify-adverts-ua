@@ -147,6 +147,14 @@ public class PropertyRealty {
         this.advert = advert;
     }
 
+    public int getMaxPeople() {
+        return maxPeople;
+    }
+
+    public void setMaxPeople(int maxPeople) {
+        this.maxPeople = maxPeople;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

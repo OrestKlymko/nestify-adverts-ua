@@ -10,6 +10,7 @@ org\ui\main\address\dto\AddressCreateRequest.class
 org\ui\main\address\model\City.class
 org\ui\main\advert\model\enums\ApartmentFeature.class
 org\ui\main\mail\service\MailService.class
+org\ui\main\seller\dto\SellerResponse.class
 org\ui\main\review\service\ReviewService.class
 org\ui\main\seller\enums\TypeOwner.class
 org\ui\main\review\controller\ReviewController.class
