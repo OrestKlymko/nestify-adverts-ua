@@ -36,6 +36,8 @@ public class PropertyRealty {
     @Enumerated(EnumType.STRING)
     @Column(name = "WITH_PETS")
     private AllowedStatus withPets;
+    @Column(name = "MAX_PEOPLE")
+    private int maxPeople;
     @Enumerated(EnumType.STRING)
     @Column(name = "WITH_KIDS")
     private AllowedStatus withKids;

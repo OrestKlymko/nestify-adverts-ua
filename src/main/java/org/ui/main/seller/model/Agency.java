@@ -1,4 +1,4 @@
-package org.ui.main.advert.model.seller;
+package org.ui.main.seller.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;

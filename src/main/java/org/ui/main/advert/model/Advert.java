@@ -7,7 +7,7 @@ import org.ui.main.address.model.Address;
 import org.ui.main.advert.model.enums.Status;
 import org.ui.main.advert.model.enums.TypeRealty;
 import org.ui.main.advert.model.property.PropertyRealty;
-import org.ui.main.advert.model.seller.Seller;
+import org.ui.main.seller.model.Seller;
 import org.ui.main.review.model.Review;
 
 import java.time.LocalDateTime;

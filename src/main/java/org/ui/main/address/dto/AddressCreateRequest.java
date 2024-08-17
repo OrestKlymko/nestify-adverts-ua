@@ -5,8 +5,6 @@ public record AddressCreateRequest(
         String district,
         String street,
         String city,
-        int houseNumber,
-        double latitude,
-        double longitude
+        int houseNumber
 ) {
 }

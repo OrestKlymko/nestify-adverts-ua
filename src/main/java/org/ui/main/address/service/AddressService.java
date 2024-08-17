@@ -13,6 +13,8 @@ import org.ui.main.address.repository.AddressRepository;
 import org.ui.main.address.repository.CityRepository;
 import org.ui.main.address.repository.DistrictRepository;
 import org.ui.main.address.repository.StreetRepository;
+import org.ui.main.osm.dto.LocationInfoResponse;
+import org.ui.main.osm.service.OsmService;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -23,12 +25,14 @@ public class AddressService {
     private final CityRepository cityRepository;
     private final DistrictRepository districtRepository;
     private final StreetRepository streetRepository;
+    private final OsmService osmService;
 
-    public AddressService(AddressRepository addressRepository, CityRepository cityRepository, DistrictRepository districtRepository, StreetRepository streetRepository) {
+    public AddressService(AddressRepository addressRepository, CityRepository cityRepository, DistrictRepository districtRepository, StreetRepository streetRepository, OsmService osmService) {
         this.addressRepository = addressRepository;
         this.cityRepository = cityRepository;
         this.districtRepository = districtRepository;
         this.streetRepository = streetRepository;
+        this.osmService = osmService;
     }
 
 
@@ -47,16 +51,16 @@ public class AddressService {
         });
 
         cities.forEach(city -> {
-            locationResponses.add(new AllLocationResponse(id.get(),city, "", ""));
+            locationResponses.add(new AllLocationResponse(id.get(), city, "", ""));
             id.getAndIncrement();
         });
 
         districts.forEach((district, city) -> {
-            locationResponses.add(new AllLocationResponse(id.get(),city, district, ""));
+            locationResponses.add(new AllLocationResponse(id.get(), city, district, ""));
             id.getAndIncrement();
         });
 
-        allLocation.forEach(location->{
+        allLocation.forEach(location -> {
             locationResponses.add(new AllLocationResponse(id.get(), location.getCity(), location.getDistrict(), location.getStreet()));
             id.getAndIncrement();
         });
@@ -69,11 +73,11 @@ public class AddressService {
         City city = getCity(request.city());
         District district = getDistrict(request.district(), request.city());
         Street street = getStreet(request.street(), request.houseNumber(), request.city(), request.district());
-
+        LocationInfoResponse coordinatesFromOSM = osmService.getCoordinatesFromOSM(request.city() + "," + request.street() + "," + request.houseNumber());
         Address address = new Address();
         address.setBuildIdMapTiler(request.buildIdMapTiler());
-        address.setLatitude(request.latitude());
-        address.setLongitude(request.longitude());
+        address.setLatitude(coordinatesFromOSM.latitude());
+        address.setLongitude(coordinatesFromOSM.longitude());
         address.setBuildIdMapTiler(request.buildIdMapTiler());
         address.setCity(city);
         address.setDistrict(district);
