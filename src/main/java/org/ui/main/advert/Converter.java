@@ -35,6 +35,7 @@ public class Converter {
 
     public static PropertyRealty toPropertyRealty(CreateAdvertRequest request, List<Advantages> advantagesFromTable, List<Features> featuresFromTable) {
         PropertyRealty propertyRealty = new PropertyRealty();
+        propertyRealty.setMaxPeople(request.property().maxPerson());
         propertyRealty.setSquare(request.property().square());
         propertyRealty.setFloor(request.property().floor());
         propertyRealty.setRoom(request.property().room());
