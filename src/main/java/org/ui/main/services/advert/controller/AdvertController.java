@@ -23,7 +23,7 @@ public class AdvertController {
         this.advertService = advertService;
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}", produces = "application/json")
     @Operation(summary = "Get info of advert for final page")
     public ResponseEntity<FinalPageResponse> getAdvert(
             @Parameter(description = "Advert ID", required = true)
@@ -40,6 +40,7 @@ public class AdvertController {
 
 
     @ExceptionHandler(NotFondException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<?> handleNotFoundException(NotFondException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
