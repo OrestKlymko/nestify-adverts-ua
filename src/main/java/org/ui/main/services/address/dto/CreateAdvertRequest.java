@@ -3,6 +3,7 @@ package org.ui.main.services.address.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.ui.main.services.advert.dto.PropertyCreateRequest;
 import org.ui.main.services.advert.model.enums.TypeRealty;
+import org.ui.main.services.seller.enums.TypeOwner;
 
 import java.io.File;
 import java.util.Set;
@@ -23,6 +24,8 @@ public record CreateAdvertRequest(
 		@Schema(description = "Main property")
 		PropertyCreateRequest property,
 		@Schema(description = "Address")
-		AddressCreateRequest address
+		AddressCreateRequest address,
+		@Schema(description = "Type owner")
+		TypeOwner typeOwner
 ) {
 }

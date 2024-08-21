@@ -1,73 +1,67 @@
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/MainApplication.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/config/OpenApiConfig.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/config/RestConfig.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/exceptions/NotFondException.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/input/ai/controller/AiController.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/input/ai/dto/AiRequest.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/input/ai/dto/AiResponse.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/input/ai/service/AiService.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/input/osm/dto/LocationInfoResponse.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/input/osm/dto/OsmResponse.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/input/osm/service/OsmService.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/output/mail/dto/MailStructure.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/output/mail/service/MailService.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/address/controller/AddressController.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/address/dto/AddressCreateRequest.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/address/dto/AllLocationDto.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/address/dto/AllLocationResponse.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/address/dto/CreateAdvertRequest.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/address/model/Address.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/address/model/City.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/address/model/District.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/address/model/DistrictPart.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/address/model/Street.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/address/repository/AddressRepository.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/address/repository/CityRepository.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/address/repository/DistrictPartRepository.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/address/repository/DistrictRepository.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/address/repository/StreetRepository.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/address/service/AddressService.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/advert/Converter.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/advert/controller/AdvertController.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/advert/dto/AdminResponse.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/advert/dto/FinalPageResponse.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/advert/dto/PropertyCreateRequest.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/advert/dto/SellerCreateRequest.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/advert/model/Advert.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/advert/model/enums/Advantage.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/advert/model/enums/AllowedStatus.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/advert/model/enums/ApartmentFeature.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/advert/model/enums/Status.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/advert/model/enums/TypeRealty.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/advert/model/property/Advantages.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/advert/model/property/Features.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/advert/model/property/PropertyRealty.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/advert/repository/AdvertRepository.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/advert/repository/property/AdvantageRepository.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/advert/repository/property/FeatureRepository.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/advert/repository/property/PropertyRealtyRepository.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/advert/service/AdvertService.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/map/contoller/MapController.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/map/dto/MapAdvertsResponse.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/map/dto/PointMapResponse.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/map/repository/MapRepository.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/map/service/MapService.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/review/controller/ReviewController.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/review/dto/ReviewOnAdvertResponse.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/review/model/Review.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/review/repository/ReviewRepository.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/review/service/ReviewService.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/search/controller/SearchController.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/search/dto/CoordinateResponse.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/search/dto/FilterSearchResponse.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/search/dto/PageResponse.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/search/dto/PriceRangeStatisticResponse.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/search/service/SearchService.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/seller/SellerController.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/seller/dto/SellerResponse.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/seller/enums/TypeOwner.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/seller/model/Agency.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/seller/model/Seller.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/seller/repository/AgencyRepository.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/seller/repository/SellerRepository.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/seller/service/SellerService.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\config\OpenApiConfig.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\config\RestConfig.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\exceptions\NotFondException.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\input\ai\controller\AiController.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\input\ai\dto\AiRequest.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\input\ai\dto\AiResponse.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\input\ai\service\AiService.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\input\osm\dto\LocationInfoResponse.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\input\osm\dto\OsmResponse.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\input\osm\service\OsmService.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\MainApplication.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\output\mail\dto\MailStructure.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\output\mail\service\MailService.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\address\controller\AddressController.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\address\dto\AddressCreateRequest.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\address\dto\AllLocationDto.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\address\dto\AllLocationResponse.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\address\dto\CreateAdvertRequest.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\address\model\Address.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\address\model\City.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\address\model\District.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\address\model\DistrictPart.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\address\model\Street.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\address\repository\AddressRepository.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\address\repository\CityRepository.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\address\repository\DistrictPartRepository.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\address\repository\DistrictRepository.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\address\repository\StreetRepository.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\address\service\AddressService.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\advert\controller\AdvertController.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\advert\Converter.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\advert\dto\AdminResponse.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\advert\dto\AdvertInfoResponse.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\advert\dto\FinalPageResponse.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\advert\dto\PropertyCreateRequest.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\advert\dto\SellerResponse.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\advert\model\Advert.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\advert\model\enums\Advantage.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\advert\model\enums\AllowedStatus.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\advert\model\enums\ApartmentFeature.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\advert\model\enums\Status.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\advert\model\enums\TypeRealty.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\advert\model\property\Advantages.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\advert\model\property\Features.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\advert\model\property\PropertyRealty.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\advert\repository\AdvertRepository.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\advert\repository\property\AdvantageRepository.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\advert\repository\property\FeatureRepository.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\advert\repository\property\PropertyRealtyRepository.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\advert\service\AdvertService.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\map\contoller\MapController.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\map\dto\MapAdvertsResponse.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\map\dto\PointMapResponse.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\map\repository\MapRepository.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\map\service\MapService.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\review\controller\ReviewController.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\review\dto\ReviewOnAdvertResponse.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\review\model\Review.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\review\repository\ReviewRepository.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\review\service\ReviewService.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\search\controller\SearchController.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\search\dto\CoordinateResponse.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\search\dto\FilterSearchResponse.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\search\dto\PageResponse.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\search\dto\PriceRangeStatisticResponse.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\search\service\SearchService.java
+C:\Users\orest.klymko\OneDrive - GAMO\Pracovná plocha\nestify\nestify-main\src\main\java\org\ui\main\services\seller\enums\TypeOwner.java

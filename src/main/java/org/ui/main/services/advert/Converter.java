@@ -7,7 +7,7 @@ import org.ui.main.services.advert.model.enums.Status;
 import org.ui.main.services.advert.model.property.Advantages;
 import org.ui.main.services.advert.model.property.Features;
 import org.ui.main.services.advert.model.property.PropertyRealty;
-import org.ui.main.services.seller.model.Seller;
+import org.ui.main.services.seller.enums.TypeOwner;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,8 +17,7 @@ public class Converter {
     public static Advert toAdvert(CreateAdvertRequest request,
                                   Set<String> images,
                                   PropertyRealty realty,
-                                  Address address,
-                                  Seller seller) {
+                                  Address address) {
         Advert advert = new Advert();
         advert.setDescription(request.description());
         advert.setImages(images);
@@ -26,12 +25,15 @@ public class Converter {
         advert.setPublishedAt(LocalDateTime.now());
         advert.setFinalUrl(request.finalUrl());
         advert.setStatus(Status.IN_USE);
+        advert.setApplicationId(request.idApplication());
         advert.setTypeRealty(request.typeRealty());
         advert.setAddress(address);
         advert.setPropertyRealty(realty);
-        advert.setSeller(seller);
+        advert.setSellerId(request.sellerAuthId());
+        advert.setTypeOwner(request.typeOwner());
         return advert;
     }
+
 
     public static PropertyRealty toPropertyRealty(CreateAdvertRequest request, List<Advantages> advantagesFromTable, List<Features> featuresFromTable) {
         PropertyRealty propertyRealty = new PropertyRealty();

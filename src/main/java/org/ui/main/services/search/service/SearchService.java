@@ -171,7 +171,7 @@ public class SearchService {
                     break;
                 case "typeOwner":
                     List<String> typeOwners = Arrays.asList(decodedValue.split(","));
-                    predicates.add(advert.get("seller").get("typeOwner").in(typeOwners));
+                    predicates.add(advert.get("typeOwner").in(typeOwners));
                     break;
                 case "withKids":
                     predicates.add(cb.equal((advert.get("propertyRealty").get("withKids")), decodedValue));
@@ -221,7 +221,7 @@ public class SearchService {
                 advert.getAddress().getBuildIdMapTiler(),
                 advert.getImages().stream().findFirst().orElse(""),
                 advert.getStatus(),
-                advert.getSeller().getAgency().getAgencyCatalog()
+                "advert.getAgencyCatalog()--test"
         )).toList();
     }
 }

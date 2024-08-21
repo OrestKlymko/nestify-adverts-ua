@@ -7,8 +7,8 @@ import org.ui.main.services.address.model.Address;
 import org.ui.main.services.advert.model.enums.Status;
 import org.ui.main.services.advert.model.enums.TypeRealty;
 import org.ui.main.services.advert.model.property.PropertyRealty;
-import org.ui.main.services.seller.model.Seller;
 import org.ui.main.services.review.model.Review;
+import org.ui.main.services.seller.enums.TypeOwner;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -45,18 +45,29 @@ public class Advert {
     @JoinColumn(name = "ADDRESS_ID", referencedColumnName = "ID")
     @JsonBackReference
     private Address address;
-    @ManyToOne
-    @JoinColumn(name = "SELLER_ID", referencedColumnName = "ID")
-    @JsonBackReference
-    private Seller seller;
+    @Column(name = "SELLER_ID")
+    private String sellerId;
+    @Column(name = "APPLICATION_ID")
+    private Long applicationId;
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS")
     private Status status;
     @ManyToMany(mappedBy = "adverts")
     private List<Review> reviews;
+    @Column(name = "TYPE_OWNER")
+    @Enumerated(EnumType.STRING)
+    private TypeOwner typeOwner;
 
     public Long getId() {
         return id;
+    }
+
+    public TypeOwner getTypeOwner() {
+        return typeOwner;
+    }
+
+    public void setTypeOwner(TypeOwner typeOwner) {
+        this.typeOwner = typeOwner;
     }
 
     public TypeRealty getTypeRealty() {
@@ -123,12 +134,28 @@ public class Advert {
         this.address = address;
     }
 
-    public Seller getSeller() {
-        return seller;
+    public String getSellerId() {
+        return sellerId;
     }
 
-    public void setSeller(Seller seller) {
-        this.seller = seller;
+    public void setSellerId(String sellerId) {
+        this.sellerId = sellerId;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
+    }
+
+    public Long getApplicationId() {
+        return applicationId;
+    }
+
+    public void setApplicationId(Long applicationId) {
+        this.applicationId = applicationId;
     }
 
     public Status getStatus() {

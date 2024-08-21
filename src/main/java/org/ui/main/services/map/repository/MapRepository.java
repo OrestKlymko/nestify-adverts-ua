@@ -44,7 +44,6 @@ public interface MapRepository extends JpaRepository<Advert, Long> {
                   property_building.floor                                AS floor,
                   property_building.room                                 AS room,
                   property_building.total_price                          AS price,
-                  agency.agency_catalog                                  AS agencyCatalog,
                   adverts.published_at                                   AS publishedAt,
                   img.image_url                                          AS advertImage,
                   ARRAY_AGG(DISTINCT features.feature)                   AS features,
@@ -60,10 +59,6 @@ public interface MapRepository extends JpaRepository<Advert, Long> {
                 street ON address.street_id = street.id
                     LEFT JOIN
                 property_building ON adverts.property_id = property_building.id
-                    LEFT JOIN
-                seller ON adverts.seller_id = seller.id
-                    LEFT JOIN
-                agency ON seller.agency_id = agency.id
                     LEFT JOIN
                 property_features pf ON property_building.id = pf.property_id
                     LEFT JOIN
@@ -88,7 +83,6 @@ public interface MapRepository extends JpaRepository<Advert, Long> {
                     address.longitude,
                     address.latitude,
                     adverts.published_at,
-                    agency.agency_catalog,
                     property_building.square,
                     property_building.floor,
                     property_building.room,
