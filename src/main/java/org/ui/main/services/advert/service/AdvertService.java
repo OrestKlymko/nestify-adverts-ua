@@ -74,7 +74,7 @@ public class AdvertService {
 
     private SellerResponse getSeller(String sellerId) throws NotFondException {
         ResponseEntity<SellerResponse> response = restTemplate
-                .getForEntity(adminServiceUrl + "/auth/api/seller/" + sellerId, SellerResponse.class);
+                .getForEntity(authServiceUrl + "/api/seller/" + sellerId, SellerResponse.class);
         if (response.getStatusCode().equals(HttpStatusCode.valueOf(200))) {
             return response.getBody();
         } else {
