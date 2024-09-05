@@ -1,6 +1,8 @@
 package org.ui.main.services.address.service;
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.ui.main.services.address.dto.AddressCreateRequest;
 import org.ui.main.services.address.dto.AllLocationDto;
@@ -21,6 +23,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class AddressService {
+    private static final Logger log = LoggerFactory.getLogger(AddressService.class);
     private final AddressRepository addressRepository;
     private final CityRepository cityRepository;
     private final DistrictRepository districtRepository;
@@ -74,10 +77,19 @@ public class AddressService {
         District district = getDistrict(request.district(), request.city());
         Street street = getStreet(request.street(), request.houseNumber(), request.city(), request.district());
         LocationInfoResponse coordinatesFromOSM = osmService.getCoordinatesFromOSM(request.city() + "," + request.street() + "," + request.houseNumber());
+
+        if (coordinatesFromOSM == null) {
+	        AddressService.log.error("Coordinates not found for the address: {}, {}, {}", request.city(), request.street(), request.houseNumber());
+        }
         Address address = new Address();
         address.setBuildIdMapTiler(request.buildIdMapTiler());
-        address.setLatitude(coordinatesFromOSM.latitude());
-        address.setLongitude(coordinatesFromOSM.longitude());
+        if(coordinatesFromOSM == null) {
+            address.setLatitude(0.0);
+            address.setLongitude(0.0);
+        }else {
+            address.setLatitude(coordinatesFromOSM.latitude());
+            address.setLongitude(coordinatesFromOSM.longitude());
+        }
         address.setBuildIdMapTiler(request.buildIdMapTiler());
         address.setCity(city);
         address.setDistrict(district);

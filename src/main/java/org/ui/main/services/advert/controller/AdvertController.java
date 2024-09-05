@@ -34,8 +34,9 @@ public class AdvertController {
 
     @PostMapping
     @Operation(summary = "Create new advert")
-    public void createAdvert(@RequestBody CreateAdvertRequest advertRequest) {
+    public ResponseEntity<Void> createAdvert(@RequestBody CreateAdvertRequest advertRequest) {
         advertService.createAdvert(advertRequest);
+	    return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 
