@@ -105,7 +105,7 @@ public class AdvertService {
     private Advert getAdvert(CreateAdvertRequest request) {
 
         Address address = addressService.createAddress(request.address());
-        HashSet<String> images = new HashSet<>();
+        Set<String> images =request.images();
         PropertyRealty property = getProperty(request);
 
         return Converter.toAdvert(request, images, property, address);

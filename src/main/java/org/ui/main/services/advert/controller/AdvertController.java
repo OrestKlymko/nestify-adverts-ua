@@ -5,12 +5,10 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.ui.main.services.address.dto.CreateAdvertRequest;
 import org.ui.main.services.advert.dto.FinalPageResponse;
 import org.ui.main.services.advert.service.AdvertService;
-import org.ui.main.services.advert.dto.AdvertInfoResponse;
 import org.ui.main.exceptions.NotFondException;
 
 @RestController

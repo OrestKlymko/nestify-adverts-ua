@@ -20,7 +20,7 @@ public record CreateAdvertRequest(
 		@Schema(description = "Seller authenticate ID from Keycloak service")
 		String sellerAuthId,
 		@Schema(description = "Images")
-		Set<File> images,
+		Set<String> images,
 		@Schema(description = "Main property")
 		PropertyCreateRequest property,
 		@Schema(description = "Address")

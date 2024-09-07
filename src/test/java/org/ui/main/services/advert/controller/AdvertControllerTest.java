@@ -73,7 +73,7 @@ class AdvertControllerTest {
 				"Some description",
 				"https://example.com",
 				"3bed581f-da62-4333-ae25-1285049289ac",
-				Set.of(File.listRoots()[0]),
+				Set.of("https://example.com/image1.jpg", "https://example.com/image2.jpg"),
 				propertyCreateRequest,
 				addressCreateRequest,
 				TypeOwner.NESTIFY_RENT_OWNER

@@ -1,1 +1,3 @@
-org\ui\main\MainApplicationTests.class
+org/ui/main/services/advert/controller/AdvertControllerTest.class
+org/ui/main/services/search/controller/SearchControllerTest.class
+org/ui/main/MainApplicationTests.class
