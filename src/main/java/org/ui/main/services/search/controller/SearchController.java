@@ -3,7 +3,6 @@ package org.ui.main.services.search.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.ui.main.services.search.dto.FilterSearchResponse;
 import org.ui.main.services.search.dto.PageResponse;
@@ -17,10 +16,14 @@ import java.util.Map;
 @Tag(name = "Search")
 public class SearchController {
 
-	@Autowired
-	private SearchService searchService;
 
-	@GetMapping
+	private final SearchService searchService;
+
+    public SearchController(SearchService searchService) {
+        this.searchService = searchService;
+    }
+
+    @GetMapping
 	@Operation(summary = "Get advert on map by search filter")
 	public PageResponse<FilterSearchResponse> filterSearchForm(
 			@Parameter(
