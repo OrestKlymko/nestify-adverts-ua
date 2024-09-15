@@ -25,7 +25,7 @@ class SearchControllerTest {
 	void filterSearchForm() {
 		HashMap<String, List<String>> parameters = new HashMap<>();
 
-		parameters.put("city", List.of("Bratislava"));
+		parameters.put("city", List.of("Київ"));
 		parameters.put("rooms", List.of("1,2,3"));
 
 		PageResponse<FilterSearchResponse> filterSearchResponsePageResponse = searchController.filterSearchForm(parameters);
@@ -37,6 +37,6 @@ class SearchControllerTest {
 		assertNotNull(filterSearchResponsePageResponse.getMaxPrice());
 
 		assertTrue(roomValue == 1 || roomValue == 2 || roomValue == 3);
-		assertEquals(2, filterSearchResponsePageResponse.getPage().getContent().size());
+		assertEquals(10, filterSearchResponsePageResponse.getPage().getContent().size());
 	}
 }

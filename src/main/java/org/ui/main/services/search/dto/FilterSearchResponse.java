@@ -1,6 +1,5 @@
 package org.ui.main.services.search.dto;
 
-import org.ui.main.services.advert.model.enums.Advantage;
 import org.ui.main.services.advert.model.enums.ApartmentFeature;
 import org.ui.main.services.advert.model.enums.Status;
 
@@ -16,9 +15,8 @@ public record FilterSearchResponse(
 		float square,
 		int floor,
 		String address,
-		Set<ApartmentFeature> features,
+		Set<String> features,
 		String description,
-		Set<Advantage> advantagesList,
 		LocalDateTime publishedAt,
 		String district,
 		long buildIdMapTiler,

@@ -11,6 +11,8 @@ public interface AdvertInfoResponse {
     String getCity();
     String getDistrict();
     String getAddress();
+    String getParserOwnerName();
+    String getTypeOwner();
     Long getBuildIdMapTiler();
     Float getLongitude();
     Float getLatitude();
@@ -23,6 +25,6 @@ public interface AdvertInfoResponse {
     String getWithKids();
     String getWithPets();
     List<String> getImages();
-    List<String> getFeatures();
-    List<String> getAdvantages();
+    List<String> getFeatureValueUa();
+
 }

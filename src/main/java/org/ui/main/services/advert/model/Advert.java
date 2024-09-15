@@ -22,41 +22,81 @@ public class Advert {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "TYPE_REALTY")
     private TypeRealty typeRealty;
+
     @Column(name = "PUBLISHED_AT")
     private LocalDateTime publishedAt;
+
     @Column(name = "EDITED_AT")
     private LocalDateTime editedAt;
+
     @Column(name = "DESCRIPTION")
     private String description;
+
     @Column(name = "FINAL_URL")
     private String finalUrl;
+
     @ElementCollection(targetClass = String.class)
     @CollectionTable(name = "IMAGES", joinColumns = @JoinColumn(name = "ADVERT_ID"))
     @Column(name = "IMAGE_URL")
     private Set<String> images;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "PROPERTY_ID", referencedColumnName = "ID")
     @JsonBackReference
     private PropertyRealty propertyRealty;
+
     @ManyToOne
     @JoinColumn(name = "ADDRESS_ID", referencedColumnName = "ID")
     @JsonBackReference
     private Address address;
+
     @Column(name = "SELLER_ID")
     private String sellerId;
+
     @Column(name = "APPLICATION_ID")
     private Long applicationId;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "STATUS")
     private Status status;
+
     @ManyToMany(mappedBy = "adverts")
     private List<Review> reviews;
+
     @Column(name = "TYPE_OWNER")
     @Enumerated(EnumType.STRING)
     private TypeOwner typeOwner;
+
+    @Column(name = "PARSER_ID")
+    private String parserId;
+
+    @Column(name = "PARSER_OWNER_NAME")
+    private String parserOwnerName;
+
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getParserId() {
+        return parserId;
+    }
+
+    public void setParserId(String parserId) {
+        this.parserId = parserId;
+    }
+
+    public String getParserOwnerName() {
+        return parserOwnerName;
+    }
+
+    public void setParserOwnerName(String parserOwnerName) {
+        this.parserOwnerName = parserOwnerName;
+    }
 
     public Long getId() {
         return id;

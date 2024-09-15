@@ -16,7 +16,6 @@ public interface MapAdvertsResponse {
     Integer getRoom();
     Integer getPrice();
     List<String> getFeatures();
-    List<String> getAdvantages();
     String getAdvertImage();
     LocalDateTime getPublishedAt();
 }

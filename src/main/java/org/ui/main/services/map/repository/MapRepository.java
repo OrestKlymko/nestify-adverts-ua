@@ -46,8 +46,7 @@ public interface MapRepository extends JpaRepository<Advert, Long> {
                   property_building.total_price                          AS price,
                   adverts.published_at                                   AS publishedAt,
                   img.image_url                                          AS advertImage,
-                  ARRAY_AGG(DISTINCT features.feature)                   AS features,
-                  ARRAY_AGG(DISTINCT advantages.advantage)               AS advantages
+                  ARRAY_AGG(DISTINCT features.feature_value_ua)                   AS features
             FROM adverts
                     LEFT JOIN
                 address ON adverts.address_id = address.id
@@ -63,10 +62,6 @@ public interface MapRepository extends JpaRepository<Advert, Long> {
                 property_features pf ON property_building.id = pf.property_id
                     LEFT JOIN
                 features ON pf.feature_id = features.id
-                    LEFT JOIN
-                property_advantages pa ON property_building.id = pa.property_id
-                    LEFT JOIN
-                advantages ON pa.advantage_id = advantages.id
                     LEFT JOIN LATERAL
                (SELECT image_url
                 FROM images

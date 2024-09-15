@@ -19,40 +19,42 @@ import java.util.Optional;
 @Service
 public class AdvertService {
 
-    private static final Logger log = LoggerFactory.getLogger(AdvertService.class);
+	private static final Logger log = LoggerFactory.getLogger(AdvertService.class);
 
-    @Value("${nestify-auth-service-url}")
-    private String authServiceUrl;
+	@Value("${nestify-auth-service-url}")
+	private String authServiceUrl;
 
-    private final AdvertRepository advertRepository;
-    private final RestTemplate restTemplate;
-
-
-    public AdvertService(AdvertRepository advertRepository, RestTemplate restTemplate) {
-        this.advertRepository = advertRepository;
-        this.restTemplate = restTemplate;
-    }
+	private final AdvertRepository advertRepository;
+	private final RestTemplate restTemplate;
 
 
-    public FinalPageResponse findAdvertById(Long id) throws NotFondException {
-        Optional<AdvertInfoResponse> advertById = advertRepository.getAdvertById(id);
-        if (advertById.isPresent()) {
-            SellerResponse seller = getSeller(advertById.get().getSellerId());
-            return new FinalPageResponse(advertById.get(), seller);
-        }
-        throw new NotFondException(String.format("Advert with id %s not found", id));
-    }
+	public AdvertService(AdvertRepository advertRepository, RestTemplate restTemplate) {
+		this.advertRepository = advertRepository;
+		this.restTemplate = restTemplate;
+	}
 
 
-    private SellerResponse getSeller(String sellerId) throws NotFondException {
-        ResponseEntity<SellerResponse> response = restTemplate
-                .getForEntity(authServiceUrl + "/api/seller/" + sellerId, SellerResponse.class);
-        if (response.getStatusCode().equals(HttpStatusCode.valueOf(200))) {
-            return response.getBody();
-        } else {
-            log.error("Seller with id {} not found", sellerId);
-            throw new NotFondException(String.format("Seller with id %s not found", sellerId));
-        }
+	public FinalPageResponse findAdvertById(Long id) throws NotFondException {
+		Optional<AdvertInfoResponse> advertById = advertRepository.getAdvertById(id);
+		if (advertById.isPresent() && !advertById.get().getSellerId().equals("parser")) {
+			SellerResponse seller = getSeller(advertById.get().getSellerId());
+			return new FinalPageResponse(advertById.get(), seller);
+		} else if (advertById.isPresent()) {
+			return new FinalPageResponse(advertById.get());
+		}
+		throw new NotFondException(String.format("Advert with id %s not found", id));
+	}
 
-    }
+
+	private SellerResponse getSeller(String sellerId) throws NotFondException {
+		ResponseEntity<SellerResponse> response = restTemplate
+				.getForEntity(authServiceUrl + "/api/seller/" + sellerId, SellerResponse.class);
+		if (response.getStatusCode().equals(HttpStatusCode.valueOf(200))) {
+			return response.getBody();
+		} else {
+			log.error("Seller with id {} not found", sellerId);
+			throw new NotFondException(String.format("Seller with id %s not found", sellerId));
+		}
+
+	}
 }

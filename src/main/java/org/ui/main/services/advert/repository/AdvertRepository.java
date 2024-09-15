@@ -13,28 +13,29 @@ import java.util.Optional;
 @Repository
 public interface AdvertRepository extends JpaRepository<Advert, Long> {
     @Query(value = """
-            SELECT adverts.id                                            as id,
-                   adverts.description                                   as description,
-                   adverts.final_url                                     as finalUrl,
-                   adverts.type_realty                                   as typeRealty,
-                   adverts.seller_id                                     as sellerId,
-                   city.city_name                                        as city,
-                   districts.district_name                               as district,
-                   concat(street.street_name, ', ',street.street_number) as address,
-                   address.build_map_tiler                               as buildIdMapTiler,
-                   address.longitude                                     as longitude,
-                   address.latitude                                      as latitude,
-                   property_building.id                                  as propertyId,
-                   property_building.square                              as square,
-                   property_building.floor                               as floor,
-                   property_building.room                                as room,
-                   property_building.realty_price                        as realtyPrice,
-                   property_building.total_price                         as totalPrice,
-                   property_building.with_kids                           as withKids,
-                   property_building.with_pets                           as withPets,
-                   ARRAY_AGG(DISTINCT images.image_url)                  as images,
-                   ARRAY_AGG(DISTINCT features.feature)                  as features,
-                   ARRAY_AGG(DISTINCT advantages.advantage)              as advantages
+            SELECT adverts.id                                             as id,
+                   adverts.description                                    as description,
+                   adverts.final_url                                      as finalUrl,
+                   adverts.type_realty                                    as typeRealty,
+                   adverts.seller_id                                      as sellerId,
+                   city.city_name                                         as city,
+                   districts.district_name                                as district,
+                   concat(street.street_name, ', ', street.street_number) as address,
+                   address.build_map_tiler                                as buildIdMapTiler,
+                   address.longitude                                      as longitude,
+                   address.latitude                                       as latitude,
+                   property_building.id                                   as propertyId,
+                   property_building.square                               as square,
+                   property_building.floor                                as floor,
+                   property_building.room                                 as room,
+                   property_building.realty_price                         as realtyPrice,
+                   property_building.total_price                          as totalPrice,
+                   property_building.with_kids                            as withKids,
+                   property_building.with_pets                            as withPets,
+                   ARRAY_AGG(DISTINCT images.image_url)                   as images,
+                   ARRAY_AGG(DISTINCT features.feature_value_ua)          as features,
+                   adverts.parser_owner_name                              as parserOwnerName,
+                   adverts.type_owner                                     as typeOwner
             FROM adverts
                      LEFT JOIN address ON adverts.address_id = address.id
                      LEFT JOIN city ON address.city_id = city.id
@@ -44,8 +45,6 @@ public interface AdvertRepository extends JpaRepository<Advert, Long> {
                      LEFT JOIN images on adverts.id = images.advert_id
                      LEFT JOIN property_features pf on property_building.id = pf.property_id
                      LEFT JOIN features on pf.feature_id = features.id
-                     LEFT JOIN property_advantages pa on property_building.id = pa.property_id
-                     LEFT JOIN advantages on pa.advantage_id = advantages.id
             WHERE adverts.id = :id
             GROUP BY adverts.id,
                      adverts.description,

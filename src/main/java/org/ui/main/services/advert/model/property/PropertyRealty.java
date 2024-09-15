@@ -41,11 +41,6 @@ public class PropertyRealty {
     @Enumerated(EnumType.STRING)
     @Column(name = "WITH_KIDS")
     private AllowedStatus withKids;
-    @ManyToMany
-    @JoinTable(name = "PROPERTY_ADVANTAGES",
-    joinColumns = @JoinColumn(name = "PROPERTY_ID"),
-    inverseJoinColumns = @JoinColumn(name = "ADVANTAGE_ID"))
-    private List<Advantages> advantageList;
     @OneToOne(mappedBy = "propertyRealty")
     @JsonManagedReference
     private Advert advert;
@@ -129,14 +124,6 @@ public class PropertyRealty {
 
     public void setWithKids(AllowedStatus withKids) {
         this.withKids = withKids;
-    }
-
-    public List<Advantages> getAdvantageList() {
-        return advantageList;
-    }
-
-    public void setAdvantageList(List<Advantages> advantageList) {
-        this.advantageList = advantageList;
     }
 
     public Advert getAdvert() {
