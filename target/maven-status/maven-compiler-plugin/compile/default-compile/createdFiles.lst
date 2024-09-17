@@ -5,6 +5,7 @@ org/ui/main/services/search/service/SearchService.class
 org/ui/main/services/search/dto/CoordinateResponse.class
 org/ui/main/services/address/controller/AddressController.class
 org/ui/main/services/advert/model/enums/Status.class
+org/ui/main/services/feature/dto/FeatureResponse.class
 org/ui/main/services/review/service/ReviewService.class
 org/ui/main/input/osm/service/OsmService.class
 org/ui/main/services/search/dto/PriceRangeStatisticResponse.class
@@ -18,6 +19,7 @@ org/ui/main/services/review/model/Review.class
 org/ui/main/services/seller/enums/TypeOwner.class
 org/ui/main/services/advert/service/AdvertService.class
 org/ui/main/services/address/model/DistrictPart.class
+org/ui/main/services/feature/model/Features.class
 org/ui/main/config/RestConfig.class
 org/ui/main/services/address/model/Address.class
 org/ui/main/input/osm/dto/LocationInfoResponse.class
@@ -35,10 +37,13 @@ org/ui/main/services/advert/model/enums/TypeRealty.class
 org/ui/main/services/address/repository/AddressRepository.class
 org/ui/main/services/address/model/City.class
 org/ui/main/services/advert/model/enums/ApartmentFeature.class
+org/ui/main/services/feature/controller/FeatureController.class
 org/ui/main/services/advert/repository/AdvertRepository.class
 org/ui/main/services/advert/model/property/PropertyRealty.class
 org/ui/main/services/map/dto/MapAdvertsResponse.class
+org/ui/main/services/feature/service/FeatureService.class
 org/ui/main/services/search/controller/SearchController.class
+org/ui/main/services/feature/repository/FeatureRepository.class
 org/ui/main/services/address/model/District.class
 org/ui/main/services/address/model/Street.class
 org/ui/main/input/osm/dto/OsmResponse.class
@@ -50,4 +55,3 @@ org/ui/main/services/advert/dto/SellerResponse.class
 org/ui/main/services/search/dto/FilterSearchResponse.class
 org/ui/main/MainApplication.class
 org/ui/main/services/advert/dto/AdvertInfoResponse.class
-org/ui/main/services/advert/model/property/Features.class

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.ui.main.services.advert.model.Advert;
 import org.ui.main.services.advert.model.enums.AllowedStatus;
+import org.ui.main.services.feature.model.Features;
 
 import java.util.List;
 import java.util.Objects;

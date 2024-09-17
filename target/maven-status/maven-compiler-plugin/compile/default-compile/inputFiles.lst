@@ -30,10 +30,14 @@
 /Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/advert/model/enums/ApartmentFeature.java
 /Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/advert/model/enums/Status.java
 /Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/advert/model/enums/TypeRealty.java
-/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/advert/model/property/Features.java
 /Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/advert/model/property/PropertyRealty.java
 /Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/advert/repository/AdvertRepository.java
 /Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/advert/service/AdvertService.java
+/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/feature/controller/FeatureController.java
+/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/feature/dto/FeatureResponse.java
+/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/feature/model/Features.java
+/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/feature/repository/FeatureRepository.java
+/Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/feature/service/FeatureService.java
 /Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/map/contoller/MapController.java
 /Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/map/dto/MapAdvertsResponse.java
 /Users/orestklymko/Desktop/nestify/nestify-main/src/main/java/org/ui/main/services/map/dto/PointMapResponse.java

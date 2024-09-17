@@ -7,7 +7,6 @@ import jakarta.persistence.criteria.*;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.ui.main.services.advert.model.Advert;
-import org.ui.main.services.advert.model.property.Features;
 import org.ui.main.services.search.dto.CoordinateResponse;
 import org.ui.main.services.search.dto.FilterSearchResponse;
 import org.ui.main.services.search.dto.PageResponse;
@@ -31,7 +30,7 @@ public class SearchService {
 
 
 		String sortStrategy = "newest";
-
+		String language = "ua";
 		CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		CriteriaQuery<Advert> cq = cb.createQuery(Advert.class);
 		Root<Advert> advert = cq.from(Advert.class);
@@ -51,6 +50,10 @@ public class SearchService {
 		}
 		if (urlParameters.containsKey("priceTo")) {
 			priceTo = Integer.parseInt(String.valueOf(urlParameters.get("priceTo")));
+		}
+
+		if (urlParameters.containsKey("lang")) {
+			language = String.valueOf(urlParameters.get("lang"));
 		}
 
 		predicates.add(cb.greaterThanOrEqualTo(advert.get("propertyRealty").get("totalPrice"), priceFrom));
@@ -80,7 +83,7 @@ public class SearchService {
 		List<Advert> advertFinal = queryFinal.getResultList();
 
 
-		List<FilterSearchResponse> filterSearchResponses = convertToResponse(advertFinal);
+		List<FilterSearchResponse> filterSearchResponses = convertToResponse(advertFinal, language);
 
 		Pageable pageRequest = PageRequest.of(offset / limit, limit);
 		Page<FilterSearchResponse> page = new PageImpl<>(filterSearchResponses, pageRequest, total.size());
@@ -158,9 +161,9 @@ public class SearchService {
 					Join<Object, Object> subFeaturesJoin = subRoot.join("propertyRealty").join("features");
 					subquery.select(subRoot.get("id"))
 							.where(subRoot.get("id").in(advert.get("id")),
-									subFeaturesJoin.get("featureName").in(features))
+									subFeaturesJoin.get("featureKey").in(features))
 							.groupBy(subRoot.get("id"))
-							.having(cb.equal(cb.countDistinct(subFeaturesJoin.get("featureName")), features.size()));
+							.having(cb.equal(cb.countDistinct(subFeaturesJoin.get("featureKey")), features.size()));
 					predicates.add(advert.get("id").in(subquery));
 					break;
 				case "district":
@@ -202,24 +205,35 @@ public class SearchService {
 				.toList();
 	}
 
-	private List<FilterSearchResponse> convertToResponse(List<Advert> adverts) {
-		return adverts.stream().map(advert -> new FilterSearchResponse(
-				advert.getId(),
-				advert.getAddress().getLongitude(),
-				advert.getAddress().getLatitude(),
-				advert.getPropertyRealty().getTotalPrice(),
-				advert.getPropertyRealty().getRoom(),
-				advert.getPropertyRealty().getSquare(),
-				advert.getPropertyRealty().getFloor(),
-				advert.getAddress().getStreet().getStreetName() + ", " + advert.getAddress().getStreet().getStreetNumber(),
-				advert.getPropertyRealty().getFeatures().stream().map(Features::getFeatureKey).collect(Collectors.toSet()),
-				advert.getDescription(),
-				advert.getPublishedAt(),
-				advert.getAddress().getDistrict().getDistrictName(),
-				advert.getAddress().getBuildIdMapTiler(),
-				advert.getImages().stream().findFirst().orElse(""),
-				advert.getStatus(),
-				"advert.getAgencyCatalog()--test"
-		)).toList();
+	private List<FilterSearchResponse> convertToResponse(List<Advert> adverts, String language) {
+		return adverts.stream().map(advert -> {
+			HashMap<String, String> features = new HashMap<>();
+			advert.getPropertyRealty()
+					.getFeatures()
+					.stream()
+					.map(feature ->
+							features.put(feature.getFeatureKey(),
+									language.equals("ua") ?
+											feature.getFeatureValueUa() :
+											feature.getFeatureValueRu()));
+			return new FilterSearchResponse(
+					advert.getId(),
+					advert.getAddress().getLongitude(),
+					advert.getAddress().getLatitude(),
+					advert.getPropertyRealty().getTotalPrice(),
+					advert.getPropertyRealty().getRoom(),
+					advert.getPropertyRealty().getSquare(),
+					advert.getPropertyRealty().getFloor(),
+					advert.getAddress().getStreet().getStreetName() + ", " + advert.getAddress().getStreet().getStreetNumber(),
+					features,
+					advert.getDescription(),
+					advert.getPublishedAt(),
+					advert.getAddress().getDistrict().getDistrictName(),
+					advert.getAddress().getBuildIdMapTiler(),
+					advert.getImages().stream().findFirst().orElse(""),
+					advert.getStatus(),
+					"advert.getAgencyCatalog()--test"
+			);
+		}).toList();
 	}
 }
